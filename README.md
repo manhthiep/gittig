@@ -1,5 +1,9 @@
 
-Git tools
+=======
+git-tools
+=========
+
+Summary
 ---------------
 
 # Original ideas & Copyright: https://launchpad.net/linaro-android-gerrit-support
@@ -61,6 +65,3 @@ Change logs
             git-mirror.py - v1.0
             git-repo.py - v1.0
             Added example manifests
-
-
- 
