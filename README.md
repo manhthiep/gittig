@@ -8,7 +8,7 @@ Original ideas & Copyright: https://launchpad.net/linaro-android-gerrit-support
 
 ##List of tools
   
-**1. git-mirror.py:** 
+1. **git-mirror.py:** 
 For creating/fetching local git mirrors
     * Results as following
     <pre>
@@ -40,16 +40,15 @@ For creating/fetching local git mirrors
     --dry-run
     --debug
     </pre>
-    * Config file: [**mirror.conf**]
-         * Syntax:
-         <pre>
-         [config-section/remote-name]
-         #comment
-         $var = val
-         \<src-path\> = \<local-path\> #mapping rule
-         </pre>
+    * Config file syntax: [**mirror.conf**]
+    <pre>
+    [config-section/remote-name]
+    #comment
+    $var = val
+    \<src-path\> = \<local-path\> #mapping rule
+    </pre>
 
-**2. git-repo.py:**
+2. **git-repo.py:**
 For creating/syncing git projects based on manifest file.
     * Results similar to Google's repo tool (except .repo directory)
     * Commands:
@@ -67,14 +66,13 @@ For creating/syncing git projects based on manifest file.
     --dry-run
     --debug
     </pre>
-    * Config file: [**repo.conf**]
-        * Syntax:
-        <pre>
-        [config-section/remote-name]
-        #comment
-        $var = val
-        \<src-path\> = \<local-path\> #mapping rule
-        </pre>
+    * Config file syntax: [**repo.conf**]
+    <pre>
+    [config-section/remote-name]
+    #comment
+    $var = val
+    \<src-path\> = \<local-path\> #mapping rule
+    </pre>
 
 Change logs
 ---------------
