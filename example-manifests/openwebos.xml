@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+
+  <remote  name="openwebos"
+           fetch="git://github.com/openwebos/" />
+  <remote  name="enyojs"
+           fetch="git://github.com/enyojs/" />
+  <default revision="master"
+           remote="openwebos"
+           sync-j="4" />
+
+  <project name="activitymanager" />
+  <project name="app-services" />
+  <project name="build-desktop" />
+  <project name="build-webos" />
+  <project name="cjson" />
+  <project name="cmake-modules-webos" />
+  <project name="configurator" />
+  <project name="core-apps" />
+  <project name="db8" />
+  <project name="filecache" />
+  <project name="foundation-frameworks" />
+  <project name="glibcurl" />
+  <project name="jemalloc" />
+  <project name="libpalmsocket" />
+  <project name="libpbnjson" />
+  <project name="librdx-stub" />
+  <project name="librolegen" />
+  <project name="libsandbox" />
+  <project name="loadable-frameworks" />
+  <project name="luna-applauncher" />
+  <project name="luna-init" />
+  <project name="luna-prefs" />
+  <project name="luna-service2" />
+  <project name="luna-sysmgr" />
+  <project name="luna-sysmgr-ipc" />
+  <project name="luna-sysmgr-ipc-messages" />
+  <project name="luna-sysservice" />
+  <project name="luna-systemui" />
+  <project name="luna-universalsearchmgr" />
+  <project name="luna-webkit-api" />
+  <project name="meta-oe" />
+  <project name="meta-webos" />
+  <project name="mojoservice-frameworks" />
+  <project name="mojoservicelauncher" />
+  <project name="nodejs" />
+  <project name="nodejs-module-webos-dynaload" />
+  <project name="nodejs-module-webos-pmlog" />
+  <project name="nodejs-module-webos-sysbus" />
+  <project name="novacom" />
+  <project name="novacomd" />
+  <project name="nyx-lib" />
+  <project name="pmcertificatemgr" />
+  <project name="pmloglib" />
+  <project name="pmstatemachineengine" />
+  <project name="powerd" />
+  <project name="qt" />
+  <project name="serviceinstaller" />
+  <project name="sleepd" />
+  <project name="smartkey-hun" />
+  <project name="storaged" />
+  <project name="underscore" />
+
+  <project name="api-tool" remote="enyojs" />
+  <project name="ares-project" remote="enyojs" />
+  <project name="bootplate" remote="enyojs" />
+  <project name="canvas" remote="enyojs" />
+  <project name="enyo" remote="enyojs" />
+  <project name="enyo-1.0" remote="enyojs" />
+  <project name="extra" remote="enyojs" />
+  <project name="fu" remote="enyojs" />
+  <project name="gallery" remote="enyojs" />
+  <project name="layout" remote="enyojs" />
+  <project name="onyx" remote="enyojs" />
+  <project name="sampler" remote="enyojs" />
+  <project name="support" remote="enyojs" />
+
+</manifest>
