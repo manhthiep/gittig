@@ -63,41 +63,77 @@ class GitProject(object):
     def __init__(self, name, path, remote, revision):
         self.name = name
         self.path = path
-        self.remote_url = remote + "/" + name + ".git"
-	self.revision = revision
+        self.remote = remote
+        self.url = remote.fetch_url + "/" + name + ".git"
+        self.revision = revision
+        self.is_bare_mirror = False
 
     def clone(self, basedir):
+        err = 0
         dir = os.path.join(basedir, self.path)
         if os.path.exists(dir):
             log.info("'%s' already exists, skipping", self.path)
             return 0
         os.chdir(basedir)
         log.debug("Enter %s", basedir)
-        log.info("Cloning %s", self.remote_url)
-        if self.revision == "":     
-            cmd = "git clone %s %s" % (self.remote_url, self.path)
-        else:
-            cmd = "git clone %s -b %s %s" % (self.remote_url, self.revision, self.path)
-        err = run_command(cmd)
+        log.info("Cloning %s", self.url)
+        err = run_command("git clone %s %s" % (self.url, self.path))
         if not err == 0:
             log.info("Error occurs (%d). Abort", err)
-            os.chdir(basedir)
             return err
+        if not self.revision == "" and not self.is_bare_mirror:     
+            err = run_command("git checkout %s" % (self.revision))
+            if not err == 0:
+                log.info("Error occurs (%d). Abort", err)
+                return err
         return 0
+    
+    def sync(self, basedir):
+        err = 0
+        dir = os.path.join(basedir, self.path)
+        log.debug("dir=%s", dir)
+        if os.path.exists(dir):
+            # Fetch the project
+            os.chdir(dir)
+            log.debug("Fetching %s", self.url)
+            err = run_command("git fetch")
+            if not err == 0:
+                log.info("Error occurs (%d). Abort", err)
+                return err
+            if not self.revision == "" and not self.is_bare_mirror:
+                err = run_command("git checkout %s" % (self.revision))
+                if not err == 0:
+                    log.info("Error occurs (%d). Abort", err)
+                    return err
+        else:
+            # Clone the project
+            os.chdir(basedir)
+            log.debug("Cloning %s", self.url)
+            err = run_command("git clone %s %s" % (self.url, self.path))
+            if not err == 0:
+                log.info("Error occurs (%d). Abort", err)
+                return err
+            if not self.revision == "" and not self.is_bare_mirror:     
+                err = run_command("git checkout %s" % (self.revision))
+                if not err == 0:
+                    log.info("Error occurs (%d). Abort", err)
+                    return err
+        return err
     
 class GitRemote(object):
     
-    def __init__(self, name, fetch):
+    def __init__(self, name, fetch, in_config=False):
         self.name = name
         self.fetch_url = fetch
         self.projects = []
         self.vars = {}
         self.rules = {}
+        self.is_in_config = in_config
 
     def add_project(self, project):
         for p in self.projects:
             if project.name == p.name:
-                log.debug("Project '%s' already in remote '%s'. Skip", project.name, self.name)
+                log.info("Project '%s' already in remote '%s'. Skip", project.name, self.name)
                 return 0
         self.projects.append(project)
         return 1
@@ -148,7 +184,7 @@ class RepoConfig(object):
                 remote_url = line[1:-1]
                 if not remote_url.startswith(CONFIG_KEYWORD):
                     assert "://" in remote_url, "URL schema is required in " + line
-                    git_remote = GitRemote("from_config", remote_url)       
+                    git_remote = GitRemote("from_config", remote_url, True)       
                     self.remotes.append(git_remote)
                     config_section = 0
                 else:
@@ -194,9 +230,10 @@ class RepoConfig(object):
                 log.debug("Remote '%s' already defined. Skip.", remote.fetch_url)
                 if r.name == "from_config":
                     r.name = remote.name
-                return 0
+                return -1
+        log.debug("Adding remote '%s'(%s)", remote.fetch_url, remote.name)
         self.remotes.append(remote)
-        return 1
+        return 0
 
     def find_remote(self, name):
         for r in self.remotes:
@@ -207,7 +244,7 @@ class RepoConfig(object):
     def get_remotes(self, substr_match=""):
         remotes = []
         for r in self.remotes:
-            if substr_match in r.fetch_url:
+            if substr_match in r.fetch_url or r.name == "local_dir":
                 remotes.append(r)
         return sorted(remotes, key=lambda remote: remote.fetch_url)
 
@@ -223,19 +260,50 @@ def run_command(cmdline, favor_dry_run=True):
         err = os.system(cmdline)
     return err
 
-def scan_projects(basedir):
-    projects = []
+def scan_dir_for_projects(basedir):
+    log.info("Scanning repos in '%s'...", basedir)
     for root, dirs, files in os.walk(basedir):
-        for d in dirs:
-            if d.endswith(".git"):
-                abspath = os.path.join(root, d[:-len(".git")])
-                relpath = abspath[len(basedir):]
-                log.debug("abspath=%s, relpath=%s", abspath, relpath)
-                projects.append((os.path.abspath(abspath), relpath))
-    projects.sort()
-    return projects
+        log.debug("root=%s, dirs=%s", root, dirs)
+        dirs.sort()
+        if ".git" in dirs:
+            # Project's name and project's path as relative path
+            p_name = root[len(basedir):]
+            # Dummy remote (TODO: get from working directory)
+            # Now, all projects are belong to 'local_dir' remote
+            # Later command on this remote doesn't use remote.fetch_url
+            dummy_remote = conf.find_remote("local_dir")
+            if dummy_remote == None:
+                dummy_remote = GitRemote("local_dir", "")
+                conf.add_remote(dummy_remote)                    
+            # Create a new project
+            log.debug("[1] remote=%s, p_name=%s", dummy_remote.name, p_name)
+            git_project = GitProject(p_name, p_name, dummy_remote, "")
+            # Add the project to remote
+            conf.add_project_to_remote(dummy_remote, git_project)
+            # Do not enter deeper
+            dirs[:] = []
+        else:    
+            for d in dirs:            
+                if d.endswith(".git"):
+                    abspath = os.path.join(root, d)
+                    log.debug("[2] d=%s. abspath=%s", d, abspath)
+                    # Project's name and project's path as relative path                    
+                    p_name = abspath[len(basedir):]
+                    # Dummy remote (TODO: get from working directory)
+                    # Now, all projects are belong to 'local_dir' remote
+                    # Later command on this remote doesn't use remote.fetch_url
+                    dummy_remote = conf.find_remote("local_dir")
+                    if dummy_remote == None:
+                        dummy_remote = GitRemote("local_dir", "")
+                        conf.add_remote(dummy_remote)                    
+                    # Create a new project
+                    log.debug("[2] remote=%s, p_name=%s", dummy_remote.name, p_name)
+                    git_project = GitProject(p_name, p_name, dummy_remote, "")
+                    git_project.is_bare_mirror = True
+                    # Add the project to remote
+                    conf.add_project_to_remote(dummy_remote, git_project)
 
-def get_manifest_projects(manifest):
+def parse_manifest_for_projects(manifest):
     log.info("Parsing manifest file '%s'", os.path.abspath(manifest))
     dom = minidom.parse(manifest)
     # Get remote list
@@ -268,9 +336,9 @@ def get_manifest_projects(manifest):
         if not git_remote == None:
             log.debug("Add project '%s' for remote '%s'.", p_name, p_remote_alias)
             if p_path == "":     
-                git_project = GitProject(p_name, p_name, git_remote.fetch_url, p_revision)
+                git_project = GitProject(p_name, p_name, git_remote, p_revision)
             else:
-                git_project = GitProject(p_name, p_path, git_remote.fetch_url, p_revision)
+                git_project = GitProject(p_name, p_path, git_remote, p_revision)
             conf.add_project_to_remote(git_remote, git_project)
         else:
             log.info("Skip project '%s' for remote '%s'.", p_name, p_remote_alias)        
@@ -290,31 +358,25 @@ def get_projects_for_a_remote(remote, p_match_str=""):
                 log.debug("Download '%s' --> '%s'", p.name, val)
                 p.path = val
                 projects_d.append(p)
+        elif not p_match_str == "":
+            if p_match_str in p.path or p_match_str in p.name:
+                projects_d.append(p)
         else:
             log.debug("Download '%s' --> '%s'", p.name, p.path)
-            projects_d.append(p)
-    if not p_match_str == "":
-        projects_f = []
-        for p in projects_d:
-            if p_match_str in p.path or p_match_str in p.name:
-                projects_f.append(p)
-        return projects_f      
+            projects_d.append(p)  
     return sorted(projects_d, key=lambda project: project.path)
 
-def get_project(p_match_str):
+def get_projects(p_match_str):
     """Get projects which have path or name matches with p_match_str"""
     projects_f = []
-    if p_match_str == "":
-        log.info("None project matches.")
-    else:
-        # Scan all remotes
-        for remote in conf.get_remotes(""):
-            projects = get_projects_for_a_remote(remote, p_match_str)
-            for p in projects:
-                projects_f.append(p)
+    # Scan all remotes
+    for remote in conf.get_remotes(""):
+        projects = get_projects_for_a_remote(remote, p_match_str)
+        for p in projects:
+            projects_f.append(p)
     return projects_f
 
-def clone_projects(remote, basedir, projects):
+def clone_projects(basedir, projects):
     """Clone projects from remote server"""
     count = 0
     total = len(projects)
@@ -325,26 +387,23 @@ def clone_projects(remote, basedir, projects):
         log.info("Enter %s", basedir)
         for p in projects:
             count = count + 1
-            log.info("Cloning projects: (%d/%d)", count, total)
+            log.info("Cloning projects: '%s' (%d/%d)", p.name, count, total)
             if not p.clone(basedir) == 0:
                 return
 
-def sync_projects(projects):
+def sync_projects(basedir, projects):
     """Update projects from remote server"""
     count = 0
     err = 0
     total = len(projects)
     if total == 0:
         log.info("Nothing to sync.")
-    for abspath, relpath in projects:
-        count = count + 1
-        if not os.path.isdir(abspath):
-            log.info("'%s' does not exists. Remember clone it before syncing.", relpath)
-        else:
-            log.info("Syncing " + relpath + " (%d/%d)", count, total)
-            os.chdir(abspath)
-            err = run_command("git pull")
-            if not err == 0:
+    else: 
+        log.info("Enter %s", basedir)
+        for p in projects:
+            count = count + 1
+            log.info("Syncing projects: '%s' (%d/%d)", p.name, count, total)
+            if not p.sync(basedir) == 0:
                 return
 
 def check_args(optparser, args, expected):
@@ -354,7 +413,7 @@ def check_args(optparser, args, expected):
 def do_sub_command(sub_command):
     if sub_command == "clone":
         if options.manifest:
-            get_manifest_projects(options.manifest)
+            parse_manifest_for_projects(options.manifest)
             for remote in conf.get_remotes(options.remote):
                 projects = get_projects_for_a_remote(remote, options.project)
                 log.info("=== Processing: %s (%d Repositories) ===", remote.fetch_url, len(projects))
@@ -363,27 +422,12 @@ def do_sub_command(sub_command):
             optparser.error("Please provide git project(s) by --manifest")
     elif sub_command == "sync":
         if options.manifest:
-            projects_f1 = []
-            projects_f2 = []
-            get_manifest_projects(options.manifest)
-            projects_f1 = get_project(options.project)
-            for p in projects_f1:
-                abspath = os.path.join(conf.get_local_dir() + "/", p.path)
-                relpath = abspath[len(conf.get_local_dir() + "/"):]
-                projects_f2.append((os.path.abspath(abspath), relpath))
-            sync_projects(projects_f2)
+            parse_manifest_for_projects(options.manifest)            
         else:
-            log.info("Scanning repos in '%s'...", conf.get_local_dir())
-            projects = scan_projects(conf.get_local_dir() + "/")
-            if options.project:           
-                projects_f = []
-                for abspath, relpath in projects:
-                    if relpath.startswith(options.project):
-                        projects_f.append((abspath, relpath))
-                sync_projects(projects_f)
-            else:
-                log.info("=== Processing: %d Repositories ===", len(projects))
-                sync_projects(projects)
+            scan_dir_for_projects(conf.get_local_dir() + "/")
+        projects = get_projects(options.project)
+        log.info("=== Processing: %d Repositories ===", len(projects))
+        sync_projects(conf.get_local_dir() + "/", projects)
     else:
         optparser.error("Unknown command")
 
@@ -406,24 +450,24 @@ def main():
         local_dir = os.getcwd()
 
     if not os.path.isdir(local_dir):
-        optparser.error("Mirror dir is not exist in provided path (--local-dir)")
+        optparser.error("Local dir is not exist in provided path (--local-dir or -d)")
 
     conf = RepoConfig(local_dir)
     # Read configs from file
     if options.config:
         if os.path.isfile(options.config):
             # Config file in provided path
-            log.info("Read config file '%s'", options.config)
+            log.info("Reading config file '%s'", os.path.abspath(options.config))
             conf.parse(options.config)
         else:
             optparser.error("Config file is not exist in provided path (--config)")
     elif os.path.isfile(conf.get_local_dir() + "/" + CONFIG_FILE):
         # Config file under mirror dir
-        log.info("Read config file '%s'", conf.get_local_dir() + "/" + CONFIG_FILE)
+        log.info("Reading config file '%s'", conf.get_local_dir() + "/" + CONFIG_FILE)
         conf.parse(conf.get_local_dir() + "/" + CONFIG_FILE)
     elif os.path.isfile(os.path.abspath(CONFIG_FILE)):
         # Config file under current directory
-        log.info("Read config file '%s'", os.path.abspath(CONFIG_FILE))
+        log.info("Reading config file '%s'", os.path.abspath(CONFIG_FILE))
         conf.parse(os.path.abspath(CONFIG_FILE))
 
     do_sub_command(args[0])
