@@ -66,7 +66,7 @@ For cloning/fetching local git mirrors and git working dirs
       </pre>
   * Clone from manifest with reference mirrors:
       <pre>
-      pygit clone [--mirror] --manifest=\<manifest-file\> --reference=\<local-mirror-dir\\>
+      pygit clone [--mirror] --manifest=\<manifest-file\> --reference=\<local-mirror-dir\>
       </pre>
 
 * Sync commands:
@@ -98,21 +98,21 @@ For cloning/fetching local git mirrors and git working dirs
 
 * Options:
     <pre>
-    --manifest=\<manifest-file\>
+    --manifest=manifest-file
           Path to manifest file
-    --url=\<project-url\>
+    --url=project-url
           URL of git project
-    --project=\<project-local-path/project-name\>
+    --project=[project-local-path | project-name]
           Project filter string
-    --remote=\<remote-name/remote-url\>
+    --remote=[remote-name | remote-url]
           Remote filter string
     --mirror
           Enable mirror cloning/syncing
-    --local-dir=\<local-dir\>
+    --local-dir=local-dir
           Working local directory (default is current directory)
-    --config=\<config-file\>
+    --config=config-file
           Path to config file (default is in current directory)
-    --reference=\<local-mirror-dir\>
+    --reference=local-mirror-dir
           Path to local mirror directory
     --dry-run
           Not actual run, only print verbose
@@ -129,7 +129,8 @@ For cloning/fetching local git mirrors and git working dirs
     [remote-url]
     #comment
     $var = val
-    \<src-path\> = \<local-path\> \<--- mapping rule
+    \<src-path\> = \<local-path\>
+    \<src-path\> = skip
     </pre>
   * See example .pygit in this directory
 
