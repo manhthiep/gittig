@@ -3,11 +3,11 @@ pygit.py
 
 Original ideas & Copyright: https://launchpad.net/linaro-android-gerrit-support
 
-For cloning/fetching local git mirrors
+For cloning/fetching local git mirrors and git working dirs
 
 * Mirror directory structure:
 <pre>
-[mirror-root-dir]/[remote-url]/[project-path]\<.git\>
+[mirror-root-dir]/[remote-url]/[project-path].git
 </pre>
 <pre>
 [mirror-root-dir]
@@ -22,6 +22,7 @@ For cloning/fetching local git mirrors
        |---- CyanogenMod/
        |---- Evervolv/
 </pre>
+
 * Working directory structure:
 <pre>
 [working-root-dir]/[project-path]
@@ -49,69 +50,69 @@ For cloning/fetching local git mirrors
 
   * Clone working dirs/mirrors from manifest file:
       <pre>
-      pygit clone [--mirror] --manifest=<manifest-file>
+      pygit clone [--mirror] --manifest=\<manifest-file\>
       </pre>
   * Clone working dirs/mirrors from URL:
       <pre>
-      pygit clone [--mirror] --url=<project-url>
+      pygit clone [--mirror] --url=\<project-url\>
       </pre>
   * Clone from manifest file with project filters:
       <pre>
-      pygit clone [--mirror] --manifest=<manifest-file> --project=<project-local-path/project-name>
+      pygit clone [--mirror] --manifest=\<manifest-file\> --project=\<project-local-path/project-name\>
       </pre>
   * Clone from manifest with remote (name/URL) filters
       <pre>
-      pygit clone [--mirror] --manifest=<manirest-file> --remote=<remote-name/remote-url>
+      pygit clone [--mirror] --manifest=\<manirest-file\> --remote=\<remote-name/remote-url\>
       </pre>
   * Clone from manifest with reference mirrors:
       <pre>
-      pygit clone [--mirror] --manifest=<manifest-file> --reference=<local-mirror-dir>
+      pygit clone [--mirror] --manifest=\<manifest-file\> --reference=\<local-mirror-dir\\>
       </pre>
 
 * Sync commands:
 
   * Sync working dirs & mirrors from local directory (default is current directory):
       <pre>
-      pygit sync [--local-dir=<local-dir>]
+      pygit sync [--local-dir=\<local-dir\>]
       </pre>
   * Sync working dirs & mirrors from local directory with project filters:
       <pre>
-      pygit sync --project=<project-local-path> [--local-dir=<local-dir>]
+      pygit sync --project=\<project-local-path\> [--local-dir=\<local-dir\>]
       </pre>
   * Sync working dirs/mirrors from manifest file (map to local directory):
       <pre>
-      pygit sync [--mirror] --manifest=<manifest-file>
+      pygit sync [--mirror] --manifest=\<manifest-file\>
       </pre>
   * Sync from manifest file with project filters:
       <pre>
-      pygit sync [--mirror] --manifest=<manifest-file> --project=<project-local-path/project-name>
+      pygit sync [--mirror] --manifest=\<manifest-file\> --project=\<project-local-path/project-name\>
       </pre>
   * Sync from manifest with remote filters:
       <pre>
-      pygit sync [--mirror] --manifest=<manifest-file> --remote=<remote-name/remote-url>
+      pygit sync [--mirror] --manifest=\<manifest-file\> --remote=\<remote-name/remote-url\>
       </pre>
   * Sync from manifest with reference mirrors:
       <pre>
-      pygit sync [--mirror] --manifest=<manifest-file> --reference=<local-mirror-dir>
+      pygit sync [--mirror] --manifest=\<manifest-file\> --reference=\<local-mirror-dir\>
       </pre>
 
 * Options:
     <pre>
-    --manifest=<manifest-file>
+    --manifest=\<manifest-file\>
           Path to manifest file
-    --url=<project-url>
+    --url=\<project-url\>
           URL of git project
-    --project=<project-local-path/project-name>
+    --project=\<project-local-path/project-name\>
           Project filter string
-    --remote=<remote-name/remote-url>
+    --remote=\<remote-name/remote-url\>
           Remote filter string
     --mirror
           Enable mirror cloning/syncing
-    --local-dir=<local-dir>
+    --local-dir=\<local-dir\>
           Working local directory (default is current directory)
-    --config=<config-file>
+    --config=\<config-file\>
           Path to config file (default is in current directory)
-    --reference=<local-mirror-dir>
+    --reference=\<local-mirror-dir\>
           Path to local mirror directory
     --dry-run
           Not actual run, only print verbose
@@ -128,8 +129,13 @@ For cloning/fetching local git mirrors
     [remote-url]
     #comment
     $var = val
-    \<src-path\> = \<local-path\> <--- mapping rule
+    \<src-path\> = \<local-path\> \<--- mapping rule
     </pre>
+  * See example .pygit in this directory
+
+* Manifest file
+  * Uses manifest file format of Google's repo tool
+  * See examples in example-manifests directory  
 
 Change logs
 ---------------
