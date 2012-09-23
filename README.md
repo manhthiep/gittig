@@ -50,50 +50,50 @@ For cloning/fetching local git mirrors and git working dirs
 
   * Clone working dirs/mirrors from manifest file:
       <pre>
-      pygit clone [--mirror] --manifest=\<manifest-file\>
+      pygit.py clone [--mirror] --manifest=\<manifest-file\>
       </pre>
   * Clone working dirs/mirrors from URL:
       <pre>
-      pygit clone [--mirror] --url=\<project-url\>
+      pygit.py clone [--mirror] --url=\<project-url\>
       </pre>
   * Clone from manifest file with project filters:
       <pre>
-      pygit clone [--mirror] --manifest=\<manifest-file\> --project=\<project-local-path/project-name\>
+      pygit.py clone [--mirror] --manifest=\<manifest-file\> --project=\<project-local-path/project-name\>
       </pre>
   * Clone from manifest with remote (name/URL) filters
       <pre>
-      pygit clone [--mirror] --manifest=\<manirest-file\> --remote=\<remote-name/remote-url\>
+      pygit.py clone [--mirror] --manifest=\<manirest-file\> --remote=\<remote-name/remote-url\>
       </pre>
   * Clone from manifest with reference mirrors:
       <pre>
-      pygit clone [--mirror] --manifest=\<manifest-file\> --reference=\<local-mirror-dir\>
+      pygit.py clone [--mirror] --manifest=\<manifest-file\> --reference=\<local-mirror-dir\>
       </pre>
 
 * Sync commands:
 
   * Sync working dirs & mirrors from local directory (default is current directory):
       <pre>
-      pygit sync [--local-dir=\<local-dir\>]
+      pygit.py sync [--local-dir=\<local-dir\>]
       </pre>
   * Sync working dirs & mirrors from local directory with project filters:
       <pre>
-      pygit sync --project=\<project-local-path\> [--local-dir=\<local-dir\>]
+      pygit.py sync --project=\<project-local-path\> [--local-dir=\<local-dir\>]
       </pre>
   * Sync working dirs/mirrors from manifest file (map to local directory):
       <pre>
-      pygit sync [--mirror] --manifest=\<manifest-file\>
+      pygit.py sync [--mirror] --manifest=\<manifest-file\>
       </pre>
   * Sync from manifest file with project filters:
       <pre>
-      pygit sync [--mirror] --manifest=\<manifest-file\> --project=\<project-local-path/project-name\>
+      pygit.py sync [--mirror] --manifest=\<manifest-file\> --project=\<project-local-path/project-name\>
       </pre>
   * Sync from manifest with remote filters:
       <pre>
-      pygit sync [--mirror] --manifest=\<manifest-file\> --remote=\<remote-name/remote-url\>
+      pygit.py sync [--mirror] --manifest=\<manifest-file\> --remote=\<remote-name/remote-url\>
       </pre>
   * Sync from manifest with reference mirrors:
       <pre>
-      pygit sync [--mirror] --manifest=\<manifest-file\> --reference=\<local-mirror-dir\>
+      pygit.py sync [--mirror] --manifest=\<manifest-file\> --reference=\<local-mirror-dir\>
       </pre>
 
 * Options:
@@ -129,8 +129,7 @@ For cloning/fetching local git mirrors and git working dirs
     [remote-url]
     #comment
     $var = val
-    \<src-path\> = \<local-path\>
-    \<src-path\> = skip
+    src-path = [local-path | skip]
     </pre>
   * See example .pygit in this directory
 
