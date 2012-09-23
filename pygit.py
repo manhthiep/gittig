@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Original idea & copyright: https://launchpad.net/linaro-android-gerrit-support
 # Combination of git-mirror.py & git-repo.py
-# pygit - v1.0
+# pygit - v1.1
 #
 # Use cases:
 # =====================
