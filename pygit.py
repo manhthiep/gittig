@@ -1,37 +1,37 @@
 #!/usr/bin/env python
 # Original idea & copyright: https://launchpad.net/linaro-android-gerrit-support
 # Combination of git-mirror.py & git-repo.py
-# pygit - v1.1
+# pygit.py - v1.2
 #
 # Use cases:
 # =====================
 # 1. Clone
 # ------------
 # 1.1. Clone working dirs/mirrors from manifest file:
-#     pygit clone [--mirror] --manifest=<manifest-file>
+#     pygit.py clone [--mirror] --manifest=<manifest-file>
 # 1.2. Clone working dirs/mirrors from URL:
-#     pygit clone [--mirror] --url=<project-url>
+#     pygit.py clone [--mirror] --url=<project-url>
 # 1.3. Clone from manifest file with project filters:
-#     pygit clone [--mirror] --manifest=<manifest-file> --project=<project-local-path/project-name>
+#     pygit.py clone [--mirror] --manifest=<manifest-file> --project=<project-local-path/project-name>
 # 1.4. Clone from manifest with remote (name/URL) filters
-#     pygit clone [--mirror] --manifest=<manirest-file> --remote=<remote-name/remote-url>
+#     pygit.py clone [--mirror] --manifest=<manirest-file> --remote=<remote-name/remote-url>
 # 1.5. Clone from manifest with reference mirrors:
-#     pygit clone [--mirror] --manifest=<manifest-file> --reference=<local-mirror-dir>
+#     pygit.py clone [--mirror] --manifest=<manifest-file> --reference=<local-mirror-dir>
 #
 # 2. Sync
 # ------------
 # 2.1. Sync working dirs & mirrors from local directory (default is current directory):
-#    pygit sync [--local-dir=<local-dir>]
+#    pygit.py sync [--local-dir=<local-dir>]
 # 2.2. Sync working dirs & mirrors from local directory with project filters:
-#    pygit sync --project=<project-local-path> [--local-dir=<local-dir>]
+#    pygit.py sync --project=<project-local-path> [--local-dir=<local-dir>]
 # 2.3. Sync working dirs/mirrors from manifest file (map to local directory):
-#    pygit sync [--mirror] --manifest=<manifest-file>
+#    pygit.py sync [--mirror] --manifest=<manifest-file>
 # 2.4. Sync from manifest file with project filters:
-#    pygit sync [--mirror] --manifest=<manifest-file> --project=<project-local-path/project-name>
+#    pygit.py sync [--mirror] --manifest=<manifest-file> --project=<project-local-path/project-name>
 # 2.5. Sync from manifest with remote filters:
-#    pygit sync [--mirror] --manifest=<manifest-file> --remote=<remote-name/remote-url>
+#    pygit.py sync [--mirror] --manifest=<manifest-file> --remote=<remote-name/remote-url>
 # 2.6. Sync from manifest with reference mirrors:
-#    pygit sync [--mirror] --manifest=<manifest-file> --reference=<local-mirror-dir>
+#    pygit.py sync [--mirror] --manifest=<manifest-file> --reference=<local-mirror-dir>
 #
 # All arguments:
 # =====================
@@ -40,9 +40,9 @@
 #   --url=<project-url>
 #         URL of git project
 #   --project=<project-local-path/project-name>
-#         Project filter string
+#         Project filter string, multiple string allow (separated by comma)
 #   --remote=<remote-name/remote-url>
-#         Remote filter string
+#         Remote filter string, multiple string allow (separated by comma)
 #   --mirror
 #         Enable mirror cloning/syncing
 #   --local-dir=<local-dir>
@@ -51,6 +51,10 @@
 #         Path to config file (default is in current directory)
 #   --reference=<local-mirror-dir>
 #         Path to local mirror directory
+#   --ignore-project=<project-local-path/project-name>
+#         Project filter string, mutiple string allow (separated by comma)
+#   --ignore-remote=<remote-name/remote-url>
+#         Remote filter string, mutilple string allow (separated by comma)
 #
 # Test and debug:
 # =====================
@@ -68,6 +72,7 @@ import urlparse
 from xml.dom import minidom
 import traceback
 import subprocess
+import re
 
 # Definition
 CONFIG_KEYWORD = "CONFIG"
@@ -97,12 +102,18 @@ optparser.add_option("-m","--manifest", metavar="NAME.xml",
 optparser.add_option("-u","--url", metavar="URL",
              dest="url",
              help="URL to single git project")
-optparser.add_option("-p", "--project", metavar="DIR", default="",
+optparser.add_option("-p", "--project", metavar="SUBSTR", default="",
              dest="project", 
-             help="Project name or project local path to clone/sync")
+             help="Project projects have name or local path matching filter string")
 optparser.add_option("-r","--remote", metavar="SUBSTR", default="",
              dest="remote",
-             help="Process only remote matching SUBSTR (use with clone)")
+             help="Process remotes matching filter string")
+optparser.add_option("--ignore-project", metavar="SUBSTR", default="",
+             dest="ignore_project", 
+             help="Do not process projects have name or local path matching filter string")
+optparser.add_option("--ignore-remote", metavar="SUBSTR", default="",
+             dest="ignore_remote",
+             help="Do not process remotes matching filter string")
 optparser.add_option("--reference", metavar="DIR", default="",
              dest="reference",
              help="Reference to mirror directory")
@@ -473,10 +484,25 @@ class PyGitConfig(object):
                 return r
         return None
 
-    def get_remotes(self, substr_match=""):
+    def get_remotes(self, r_match=[], r_notmatch=[]):
         remotes = []
         for r in self.remotes:
-            if substr_match in r.fetch or substr_match == r.name or r.name == "local_dir":
+            if len(r_notmatch) > 0:
+                ignore = False
+                for str in r_notmatch:
+                    if str in r.fetch or str == r.name:
+                        ignore = True
+                        break
+                if ignore:
+                    log.info("remote '%s' is forcibly ignored", r.fetch)
+                else:
+                    remotes.append(r)
+            elif len(r_match) > 0:
+                for str in r_match:
+                    if str in r.fetch or str == r.name or r.name == "local_dir":
+                        remotes.append(r)
+                        break
+            else:
                 remotes.append(r)
         return sorted(remotes, key=lambda remote: remote.fetch)
 
@@ -577,7 +603,7 @@ class PyGitControl(object):
             else:
                 log.warning("Skip project '%s' for remote '%s'.", p_name, p_remote_alias)        
 
-    def get_projects_for_a_remote(self, remote, p_match_str=""):
+    def get_projects_for_a_remote(self, remote, p_match=[], p_notmatch=[]):
         """Get projects for a remote (rules applied)"""
         projects = remote.get_projects()
         rules = remote.get_rules()
@@ -591,28 +617,55 @@ class PyGitControl(object):
                 else:       
                     # Update project path following rule         
                     p.path = val
-                    if not p_match_str == "":
-                        if p_match_str in p.path or p_match_str in p.name:
+                    if len(p_notmatch) > 0:
+                        ignore = False
+                        for str in p_notmatch:
+                            if str in p.path or str in p.name:
+                                ignore = True
+                                break
+                        if ignore:
+                            log.info("Project '%s' is forcibly ignored", p.name)
+                        else:
                             log.debug("Download '%s' --> '%s' (forced by config)", p.name, val)
                             projects_d.append(p)
+                    elif len(p_match) > 0:
+                        for str in p_match:
+                            if str in p.path or str in p.name:
+                                log.debug("Download '%s' --> '%s' (forced by config)", p.name, val)
+                                projects_d.append(p)
+                                break
                     else:
                         log.debug("Download '%s' --> '%s' (forced by config)", p.name, val)
                         projects_d.append(p)
-            elif not p_match_str == "":
-                if p_match_str in p.path or p_match_str in p.name:
+            elif len(p_notmatch) > 0:
+                ignore = False 
+                for str in p_notmatch:
+                    if str in p.path or str in p.name:
+                       ignore = True 
+                       break
+                if ignore:
+                    log.info("Project '%s' is forcibly ignored", p.name)
+                else:
                     log.debug("Download '%s' --> '%s'", p.name, p.name if options.mirror else p.path)
                     projects_d.append(p)
+            elif len(p_match) > 0:
+                for str in p_match:
+                    if str in p.path or str in p.name:
+                        log.debug("Download '%s' --> '%s'", p.name, p.name if options.mirror else p.path)
+                        projects_d.append(p)
+                        break
             else:
                 log.debug("Download '%s' --> '%s'", p.name, p.name if options.mirror else p.path)
                 projects_d.append(p)  
         return sorted(projects_d, key=lambda project: project.path)
 
-    def get_all_projects(self, p_match_str):
-        """Get projects which have path or name matches with p_match_str"""
+    def get_all_projects(self, r_match=[], r_notmatch=[],
+                         p_match=[], p_notmatch=[]):
+        """Get projects which have path or name matches with p_match[] and not match p_notmatch[]"""
         projects_f = []
         # Scan all remotes
-        for remote in conf.get_remotes(""):
-            projects = self.get_projects_for_a_remote(remote, p_match_str)
+        for remote in conf.get_remotes(r_match, r_notmatch):
+            projects = self.get_projects_for_a_remote(remote, p_match, p_notmatch)
             for p in projects:
                 projects_f.append(p)
         return projects_f
@@ -645,7 +698,12 @@ class PyGitControl(object):
         total = len(projects)
         if total == 0:
             log.warning("Nothing to sync.")
-        else: 
+        else:
+            if not os.path.exists(basedir):
+               try:
+                   os.makedirs(basedir)
+               except OSError:
+                   pass 
             log.info("Enter %s", basedir)
             for p in projects:
                 count = count + 1
@@ -657,8 +715,8 @@ class PyGitControl(object):
 def do_clone(control):
     if options.manifest:
         control.parse_manifest_for_projects(options.manifest, options.mirror)
-        for remote in conf.get_remotes(options.remote):
-            projects = control.get_projects_for_a_remote(remote, options.project)
+        for remote in conf.get_remotes(options.remote, options.ignore_remote):
+            projects = control.get_projects_for_a_remote(remote, options.project, options.ignore_project)
             if len(projects) > 0:
                 if options.mirror:
                     basedir = os.path.join(conf.get_local_dir(), remote.get_relpath())
@@ -687,8 +745,8 @@ def do_clone(control):
 def do_sync(control):
     if options.manifest:
         control.parse_manifest_for_projects(options.manifest, options.mirror)            
-        for remote in conf.get_remotes(options.remote):
-            projects = control.get_projects_for_a_remote(remote, options.project)
+        for remote in conf.get_remotes(options.remote, options.ignore_remote):
+            projects = control.get_projects_for_a_remote(remote, options.project, options.ignore_project)
             if len(projects) > 0:
                 if options.mirror:
                     basedir = os.path.join(conf.get_local_dir(), remote.get_relpath())
@@ -698,7 +756,7 @@ def do_sync(control):
                 control.sync_projects(basedir, projects)
     else:
         control.scan_dir_for_projects(conf.get_local_dir())
-        projects = control.get_all_projects(options.project)
+        projects = control.get_all_projects(options.remote, options.ignore_remote, options.project, options.ignore_project)
         if len(projects) > 0:
             log.info("=== Processing: %d Repositories ===", len(projects))
             control.sync_projects(conf.get_local_dir(), projects)
@@ -722,6 +780,19 @@ def main():
 
     logging.basicConfig(format='%(levelname)s: %(message)s', \
                         level=logging.DEBUG if options.debug else logging.INFO)
+
+    if options.remote != "":
+        options.remote = re.split(',|;', options.remote)
+        log.debug("options.remote=%s", options.remote)
+    if options.ignore_remote != "":
+        options.ignore_remote = re.split(',|;', options.ignore_remote)
+        log.debug("options.ignore_remote=%s", options.ignore_remote)
+    if options.project != "":
+        options.project = re.split(',|;', options.project)
+        log.debug("options.project=%s", options.project)
+    if options.ignore_project != "":
+        options.ignore_project = re.split(',|;', options.ignore_project)
+        log.debug("options.ignore_project=%s", options.ignore_project)
 
     # Mirror directory settings
     if options.local_dir:
