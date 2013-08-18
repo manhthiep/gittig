@@ -735,10 +735,13 @@ def do_clone(control):
         git_project = PyGitProject(p_path, p_path, dummy_remote, "")
         if options.mirror:
             git_project.is_bare_mirror = True
+            basedir = os.path.join(conf.get_local_dir(), dummy_remote.get_relpath())
+        else:
+            basedir = conf.get_local_dir()
         projects.append(git_project)
         
         log.info("=== Processing: %s (%d Repositories) ===", dummy_remote.fetch, len(projects))
-        control.clone_projects(conf.get_local_dir(), projects)
+        control.clone_projects(basedir, projects)
     else:
         optparser.error("Please provide git project(s) by --manifest or --url")
         
