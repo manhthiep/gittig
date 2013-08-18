@@ -125,9 +125,8 @@ For cloning/fetching local git mirrors and git working dirs
     <pre>
     [CONFIG]
     $var = val
-    
     [remote-url]
-    #comment
+    # this is a comment
     $var = val
     src-path = [local-path | skip]
     </pre>
@@ -139,14 +138,16 @@ For cloning/fetching local git mirrors and git working dirs
 
 Change logs
 ---------------
-* 2012/09/15: 
+* 2013/08/18:
+    * Update pygit.py
+    * Added script helpers for cloning & syncing
+* 2012/09/24:
+    * Removed git-repo.py & git-mirror.py
+    * Tagged pygit.py - v1.1
+* 2012/09/21:
+    * Added pygit.py - combined funtions of git-mirror.py and git-repo.py
+* 2012/09/15:
     * Initial commit
     * git-mirror.py - v1.0
     * git-repo.py - v1.0
     * Added example manifests
-* 2012/09/21:
-    * Added pygit.py - combined funtions of git-mirror.py and git-repo.py
-* 2012/09/24:
-    * Removed git-repo.py & git-mirror.py
-    * Tagged pygit.py - v1.1
-
