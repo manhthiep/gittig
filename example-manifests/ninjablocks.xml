@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+
+  <remote  name="github"
+          fetch="git://github.com/" />
+
+  <default revision="master"
+          remote="github"
+          sync-j="4" />
+
+  <!-- Hardware -->
+  <project name="ninjablocks/hardware" />
+  <project name="ninjablocks/case" />
+  <!-- Core -->
+  <project name="ninjablocks/v8m-rb" />
+  <project name="ninjablocks/anode" description="framework for running node.js applications on Android" />
+  
+  <project name="ninjablocks/client" />
+  <project name="ninjablocks/libNBComms" />
+  <project name="ninjablocks/node-serialport" />
+  <project name="ninjablocks/node-ssdp" />
+  <project name="ninjablocks/node-ninja-blocks" />
+  <project name="ninjablocks/node-twilio" />
+  <project name="ninjablocks/node-inotify-plusplus" />
+  
+  <project name="ninjablocks/OAuth" />
+  <project name="ninjablocks/express-cdn" />
+  <project name="ninjablocks/knox" />
+  
+  <project name="ninjablocks/pusher-js" />
+  <project name="ninjablocks/socket.io-client" />
+  <project name="ninjablocks/uri-js" />
+  <project name="ninjablocks/node-upnp-client" />
+  
+  <project name="ninjablocks/huginn" />
+  <!--<project name="ninjablocks/beaglebone-kernel" />-->
+  <!-- API -->
+  <project name="ninjablocks/node-ninjapp-stub" />
+  <project name="ninjablocks/arduino-ninja-blocks" />
+  <project name="ninjablocks/browser-ninja-blocks" />
+  <project name="ninjablocks/ios-ninja-blocks" />
+  <project name="ninjablocks/php-ninja-blocks" />
+  <project name="ninjablocks/ruby-ninja-blocks" />
+  <project name="ninjablocks/ninja-lua" />
+  <project name="ninjablocks/titanium-ninja-blocks" />
+  <!-- Utilities -->
+  <project name="ninjablocks/utilities" />
+  <project name="ninjablocks/ninja-toolbelt" />
+  <project name="ninjablocks/block-status" />
+  <project name="ninjablocks/block-wifi" />
+  <project name="ninjablocks/block-tunnel-client" />
+  <!-- Drivers -->
+  <project name="ninjablocks/arduino" />
+  <project name="ninjablocks/ninja-rest" />
+  <project name="ninjablocks/block-admin-drivers" />
+  <project name="ninjablocks/ninja-arduino" />
+  <project name="ninjablocks/ninja-zigbee" />
+  <project name="ninjablocks/ninja-ipcam" />
+  <project name="ninjablocks/ninja-isight" />
+  <project name="ninjablocks/ninja-zwave" />
+  <project name="ninjablocks/433Utils" />
+  <project name="ninjablocks/ninjablocks-bbb-dts" />
+  <project name="ninjablocks/rtl8192cu" />
+  <!-- Web Apps -->
+  <project name="ninjablocks/ninja-sentinel" />
+  <project name="ninjablocks/ninja-remote" />
+  <project name="ninjablocks/temperature-widget" />
+  <project name="ninjablocks/simple-rest-api-explorer" />
+  <!-- Others -->
+  <project name="ninjablocks/ninjablocks.github.com" />
+  <project name="ninjablocks/RF-shirt" />
+  
+</manifest>

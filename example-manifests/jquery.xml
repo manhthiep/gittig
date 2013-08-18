@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+
+  <remote  name="jquery"
+          fetch="git://github.com/jquery/" />
+  <remote  name="carhartl"
+          fetch="git://github.com/carhartl/" />
+  <default revision="master"
+          remote="jquery"
+          sync-j="4" />
+
+  <project name="jquery" />
+  <project name="jquery-color" />
+  <project name="jquery-cookie" remote="carhartl" />
+  <project name="jquery-migrate" />
+  <project name="jquery-pointer-events" />
+  <project name="jquery-simulate" />
+  <project name="jquery-ui" />
+  <project name="jquery-wp-content" />
+  
+  <project name="jquery-mobile" />
+  <project name="jquery-mobile-builder" />
+  
+  <project name="qunit" />
+  <project name="grunt-jquery-content" />
+  <project name="qunit-composite" />
+  <project name="qunit-reporter-junit" />
+  
+  <project name="testswarm" />
+  <project name="web-jquery-mobile-theme-roller" />
+  <project name="sizzle" />
+  <project name="globalize" />
+  <project name="node-web-git-proxy" />
+  <!-- jquery.org -->
+  <project name="jquery.org" />
+  <project name="contribute.jquery.org" />
+  <project name="irc.jquery.org" />
+  <project name="meetings.jquery.org" />
+  <!-- jquery.com -->
+  <project name="jquery.com" />
+  <project name="api.jquery.com" />
+  <project name="blog.jquery.com" />
+  <project name="blog.jquery.com-theme" />
+  <project name="brand.jquery.org" />
+  <project name="books.jquery.com" />
+  <project name="bugs.jquery.com" />
+  <project name="codeorigin.jquery.com" />
+  <project name="events.jquery.org" />
+  <project name="learn.jquery.com" />
+  <project name="plugins.jquery.com" />
+   <!-- jquerymobile.com -->
+  <project name="jquerymobile.com" />
+  <project name="api.jquerymobile.com" />
+  <!-- jqueryui.com -->
+  <project name="jqueryui.com" />
+  <project name="api.jqueryui.com" />
+  <project name="bugs.jqueryui.com" />
+  <project name="download.jqueryui.com" />
+  <!-- qunitjs.com -->
+  <project name="qunitjs.com" />
+  <project name="api.qunitjs.com" />
+  <!-- sizzlejs.com -->
+  <project name="sizzlejs.com" />
+  
+  <project name="2012-dev-summit" />
+  <project name="standards" />
+  
+</manifest>

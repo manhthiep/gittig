@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+
+  <remote  name="openembedded"
+           fetch="git://git.openembedded.org/" />
+  <remote  name="yoctoproject"
+           fetch="git://git.yoctoproject.org/" />
+  <remote  name="shr-project"
+           fetch="http://git.shr-project.org/repo/" />
+  <remote  name="arago-project"
+           fetch="git://arago-project.org/git/" />
+  <remote  name="github"
+           fetch="http://github.com/" />
+  <remote  name="gitorious"
+           fetch="git://gitorious.org/" />
+  <remote  name="linaro"
+           fetch="git://git.linaro.org/" />
+  <remote  name="se-eng"
+           fetch="git://git.se-eng.com/" />
+  <default revision="master"
+           remote="openembedded"
+           sync-j="4" />
+
+  <project name="bitbake" />
+  <project name="eclipsetools" path="tools/eclipsetools" />
+  <project name="openembedded/meta-oe" path="meta-oe" remote="github" />
+  <project name="openembedded/oe-core" path="oe-core" remote="github" />
+  <project name="openembedded/openembedded" path="openembedded" remote="github" />
+  <project name="meta-handheld" />
+  <project name="meta-micro" />
+  <project name="meta-openembedded" />
+  <project name="meta-openembedded-contrib" />
+  <project name="meta-opie" />
+  <!--<project name="openembedded" />-->
+  <project name="openembedded-admin" />
+  <!--<project name="openembedded-core" />-->
+  <!--<project name="openembedded-core-contrib" />-->
+  
+  <project name="experimental/meta-darwin" remote="yoctoproject" />
+  <project name="experimental/meta-m2" remote="yoctoproject" />
+  <project name="experimental/meta-maemo" remote="yoctoproject" />
+  <project name="experimental/meta-x32" remote="yoctoproject" />  
+  <project name="meta-baryon" remote="yoctoproject" />
+  <project name="meta-demo" remote="yoctoproject" />
+  <project name="meta-dlna" remote="yoctoproject" />
+  <project name="meta-extras" remote="yoctoproject" />
+  <project name="meta-fsl-ppc" remote="yoctoproject" />
+  <project name="meta-intel" remote="yoctoproject" />
+  <project name="meta-intel-contrib" remote="yoctoproject" />
+  <project name="meta-ivi" remote="yoctoproject" />
+  <project name="meta-mentor" remote="yoctoproject" />
+  <project name="meta-mono" remote="yoctoproject" />
+  <project name="meta-oracle-java" remote="yoctoproject" />
+  <project name="meta-qt3" remote="yoctoproject" />
+  <project name="meta-selinux" remote="yoctoproject" />
+  <project name="meta-systemd" remote="yoctoproject" />
+  <project name="meta-ti" remote="yoctoproject" />
+  <project name="meta-xilinx" remote="yoctoproject" />
+  <project name="meta-yocto" remote="yoctoproject" />
+  <project name="meta-zynq" remote="yoctoproject" />
+  
+  <project name="meta-shr" remote="shr-project" />
+  <project name="meta-smartphone" remote="shr-project" />
+  <project name="meta-browser" remote="shr-project" />
+  
+  <project name="djwillis/meta-raspberrypi" path="meta-raspberrypi" remote="github" />
+  <project name="buglabs/meta-bug" path="meta-bug" remote="github" />
+  <project name="Freescale/meta-fsl-arm" path="meta-fsl-arm" remote="github" />
+  <project name="Freescale/meta-fsl-arm-extra" path="meta-fsl-arm-extra" remote="github" />
+  <project name="Freescale/meta-fsl-demos" path="meta-fsl-demos" remote="github" />
+  <project name="DFE/meta-hidav-intel" path="meta-hidav-intel" remote="github" />
+  <project name="DFE/meta-hidav-ti81xx" path="meta-hidav-ti81xx" remote="github" />
+  <project name="DFE/meta-hidav-kirkwood" path="meta-hidav-kirkwood" remote="github" />
+  <project name="ebutera/meta-allwinner" path="meta-allwinner" remote="github" />
+  <project name="ebutera/meta-igep" path="meta-igep" remote="github" />
+  <project name="kelvinlawson/meta-kirkwood" path="meta-kirkwood" remote="github" />
+  <project name="tworaz/meta-netbookpro" path="meta-netbookpro" remote="github" />
+  <project name="balister/meta-ettus" path="meta-ettus" remote="github" />
+  <project name="kraj/meta-fsl-ppc" path="meta-fsl-ppc" remote="github" />
+  <project name="kraj/meta-nslu2" path="meta-nslu2" remote="github" />
+  <project name="kraj/meta-efikamx" path="meta-efikamx" remote="github" />
+  <project name="kraj/meta-slugos" path="meta-slugos" remote="github" />
+  <project name="kraj/meta-woce" path="meta-woce" remote="github" />
+  <project name="openpandora/meta-openpandora" path="meta-openpandora" remote="github" />
+  <project name="openpandora/meta-openpandora-vendor" path="meta-openpandora-vendor" remote="github" />
+  <project name="Angstrom-distribution/meta-angstrom" path="meta-angstrom" remote="github" />
+  <project name="Angstrom-distribution/narcissus" path="tools/narcissus" remote="github" />
+  <project name="Angstrom-distribution/setup-scripts" path="tools/setup-scripts" remote="github" />
+  <project name="Guacamayo/meta-guacamayo" path="meta-guacamayo" remote="github" />
+  <project name="woglinde/meta-java" path="meta-java" remote="github" />
+  <!--<project name="woglinde/meta-tegra" path="meta-tegra" remote="github" />-->
+  <project name="OSSystems/meta-chicken" path="meta-chicken" remote="github" />
+  <project name="cazfi/meta-games" path="meta-games" remote="github" />
+  <project name="shr-project/meta-mozilla" path="meta-mozilla" remote="github" />
+  <project name="openwebos/meta-webos" path="meta-webos" remote="github" />
+  
+  <project name="picopc-tools/meta-picosam9" path="meta-picosam9" remote="gitorious" />
+  <project name="schnitzeltony-oe-meta/meta-freescale" path="meta-freescale" remote="gitorious" />
+  <project name="schnitzeltony-oe-meta/meta-gumstix" path="meta-gumstix" remote="gitorious" />
+  <project name="schnitzeltony-oe-meta/meta-misc" path="meta-misc" remote="gitorious" />
+  <project name="openembedded-core-layers/meta-kde" path="meta-kde" remote="gitorious" />
+  <project name="sysmocom-openembedded/meta-telephony" path="meta-telephony" remote="gitorious" />
+  
+  <project name="meta-arago" remote="arago-project" />
+  <project name="openembedded/meta-linaro" path="meta-linaro" remote="linaro" />
+  <project name="meta-xen" remote="se-eng" />
+  
+</manifest>

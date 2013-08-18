@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+
+  <remote  name="raspi"
+          fetch="git://github.com/raspberrypi/" />
+  <remote  name="Hexxeh"
+          fetch="git://github.com/Hexxeh/" />
+
+  <default revision="master"
+          remote="raspi"
+          sync-j="4" />
+
+  <project name="firmware" />
+  <project name="userland" />
+  <project name="linux" />
+  <project name="noobs" />
+  <project name="noobs_binaries" />
+  <project name="tools" />
+  <project name="quake3" />
+  <project name="target_fs" />
+  
+  <project name="rpi-update" remote="Hexxeh" />
+  <project name="rpi-firmware" remote="Hexxeh" />
+  
+</manifest>
