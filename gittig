@@ -1,37 +1,38 @@
 #!/usr/bin/env python
 # Original idea & copyright: https://launchpad.net/linaro-android-gerrit-support
 # Combination of git-mirror.py & git-repo.py
-# pygit.py - v1.2
+#
+# gittig - v1.2
 #
 # Use cases:
 # =====================
 # 1. Clone
 # ------------
 # 1.1. Clone working dirs/mirrors from manifest file:
-#     pygit.py clone [--mirror] --manifest=<manifest-file>
+#     gittig clone [--mirror] --manifest=<manifest-file>
 # 1.2. Clone working dirs/mirrors from URL:
-#     pygit.py clone [--mirror] --url=<project-url>
+#     gittig clone [--mirror] --url=<project-url>
 # 1.3. Clone from manifest file with project filters:
-#     pygit.py clone [--mirror] --manifest=<manifest-file> --project=<project-local-path/project-name>
+#     gittig clone [--mirror] --manifest=<manifest-file> --project=<project-local-path/project-name>
 # 1.4. Clone from manifest with remote (name/URL) filters
-#     pygit.py clone [--mirror] --manifest=<manirest-file> --remote=<remote-name/remote-url>
+#     gittig clone [--mirror] --manifest=<manirest-file> --remote=<remote-name/remote-url>
 # 1.5. Clone from manifest with reference mirrors:
-#     pygit.py clone [--mirror] --manifest=<manifest-file> --reference=<local-mirror-dir>
+#     gittig clone [--mirror] --manifest=<manifest-file> --reference=<local-mirror-dir>
 #
 # 2. Sync
 # ------------
 # 2.1. Sync working dirs & mirrors from local directory (default is current directory):
-#    pygit.py sync [--local-dir=<local-dir>]
+#    gittig sync [--local-dir=<local-dir>]
 # 2.2. Sync working dirs & mirrors from local directory with project filters:
-#    pygit.py sync --project=<project-local-path> [--local-dir=<local-dir>]
+#    gittig sync --project=<project-local-path> [--local-dir=<local-dir>]
 # 2.3. Sync working dirs/mirrors from manifest file (map to local directory):
-#    pygit.py sync [--mirror] --manifest=<manifest-file>
+#    gittig sync [--mirror] --manifest=<manifest-file>
 # 2.4. Sync from manifest file with project filters:
-#    pygit.py sync [--mirror] --manifest=<manifest-file> --project=<project-local-path/project-name>
+#    gittig sync [--mirror] --manifest=<manifest-file> --project=<project-local-path/project-name>
 # 2.5. Sync from manifest with remote filters:
-#    pygit.py sync [--mirror] --manifest=<manifest-file> --remote=<remote-name/remote-url>
+#    gittig sync [--mirror] --manifest=<manifest-file> --remote=<remote-name/remote-url>
 # 2.6. Sync from manifest with reference mirrors:
-#    pygit.py sync [--mirror] --manifest=<manifest-file> --reference=<local-mirror-dir>
+#    gittig sync [--mirror] --manifest=<manifest-file> --reference=<local-mirror-dir>
 #
 # All arguments:
 # =====================
@@ -76,11 +77,10 @@ import re
 
 # Definition
 CONFIG_KEYWORD = "CONFIG"
-CONFIG_FILE = ".pygit"
+CONFIG_FILE = ".gittig"
 
 # Global variables
 conf = None
-ctrl = None
 options = None
 log = logging.getLogger(__file__)
 
@@ -93,7 +93,7 @@ Command:
 optparser.add_option("-d", "--local-dir", metavar="DIR",
              dest="local_dir",
              help="Local root directory")
-optparser.add_option("-c","--config", default=".pygit",
+optparser.add_option("-c","--config", default=None,
              dest="config",
              help="Config file to use (%default)")
 optparser.add_option("-m","--manifest", metavar="NAME.xml",
@@ -125,16 +125,7 @@ optparser.add_option("-D","--debug", action="store_true",
              dest="debug",
              help="Enable debug logging")
 
-def run_command(cmdline, favor_dry_run=True):
-    err = 0
-    if favor_dry_run and options.dry_run:
-        log.info("Would run: %s", cmdline)
-    else:
-        log.debug("Running: %s", cmdline)
-        err = os.system(cmdline)
-    return err
-
-class PyGitCommand(object):
+class GittigCommand(object):
            
     def __init__(self, project, cmd, gitdir=None, workdir=None):
         self.process = None
@@ -142,7 +133,7 @@ class PyGitCommand(object):
         git_cmd.extend(cmd)
         if project:
             if workdir == None:
-                workdir = project.worktree
+                workdir = project.workdir
             if gitdir == None:
                 gitdir = project.gitdir
         if not workdir:
@@ -178,13 +169,13 @@ class PyGitCommand(object):
             return p.returncode   
         return -1     
     
-class PyGitProject(object):
+class GittigProject(object):
 
-    def __init__(self, name, path, remote, revision):
+    def __init__(self, name, path, remote, revision="", is_bare_mirror=False):
         self.name = name
         self.path = path
         self.remote = remote
-        self.url = remote.fetch + "/" + name + ".git"
+        self.url = remote.fetch.rstrip("/") + "/" + name
         self.is_checkout_tag = False
         if revision.startswith("refs/heads"):
             self.revision = revision[len("refs/heads")+1:]
@@ -193,13 +184,13 @@ class PyGitProject(object):
             self.is_checkout_tag = True
         else:
             self.revision = revision
-        self.is_bare_mirror = False
-        self.worktree = None
+        self.is_bare_mirror = is_bare_mirror
+        self.workdir = None
         self.gitdir = None
         
     def _update_mirror(self):
         cmd = ["remote", "update"]
-        err = PyGitCommand(self, cmd).wait()
+        err = GittigCommand(self, cmd).wait()
         return err
     
     def _checkout_commit(self, commit, detach=False, quiet=True):
@@ -209,7 +200,7 @@ class PyGitProject(object):
         if detach:
             cmd.append("--detach")
         cmd.append(commit)
-        err = PyGitCommand(self, cmd).wait()
+        err = GittigCommand(self, cmd).wait()
         return err
     
     def _checkout_branch(self, branch, remote=None, 
@@ -228,14 +219,14 @@ class PyGitProject(object):
             cmd.append("%s/%s" % (remote, branch))
         else:
             cmd.append("origin/%s" % branch)
-        err = PyGitCommand(self, cmd).wait()
+        err = GittigCommand(self, cmd).wait()
         return err
         
     def _fetch_all(self, fetchtags=True):
         cmd = ["fetch", "--all"]
         if fetchtags:
             cmd.append("--tags")
-        err = PyGitCommand(self, cmd).wait()
+        err = GittigCommand(self, cmd).wait()
         return err
     
     def _clone(self, mirror=False):
@@ -244,34 +235,41 @@ class PyGitProject(object):
             cmd.append("--mirror")
         cmd.append(self.url)
         if mirror:
-            cmd.append(self.name + ".git")
+            if self.name.endswith(".git"):
+                cmd.append(self.name)
+            else:
+                cmd.append(self.name + ".git")
         else:
             cmd.append(self.path)
-        err = PyGitCommand(self, cmd, workdir=os.getcwd()).wait()
+        err = GittigCommand(self, cmd, workdir=os.getcwd()).wait()
         return err     
     
     def clone(self, basedir):
         err = 0
         if self.is_bare_mirror:
-            self.worktree = None
-            self.gitdir = os.path.join(basedir, self.name + ".git")
+            self.workdir = None
+            if self.name.endswith(".git"):
+                self.gitdir = os.path.join(basedir, self.name)
+            else:
+                self.gitdir = os.path.join(basedir, self.name + ".git")
         else:
-            self.worktree = os.path.join(basedir, self.path)
-            self.gitdir = self.worktree.rstrip("/") + "/.git"
+            self.workdir = os.path.join(basedir, self.path)
+            self.gitdir = self.workdir.rstrip("/") + "/.git"
             
-        log.debug("self.worktree = %s", self.worktree)
-        log.debug("self.gitdir = %s", self.gitdir)
+        #log.debug("clone: workdir = '%s'", self.workdir)
+        #log.debug("clone: gitdir = '%s'", self.gitdir)
             
         if os.path.exists(self.gitdir) and not os.listdir(self.gitdir) == []:
             log.debug("Target: '%s' already exists and is not empty, skipping", \
-                      self.path if not self.is_bare_mirror else self.name + ".git")
+                      self.path if not self.is_bare_mirror else self.name)
             return 0
         
         os.chdir(basedir)
         log.debug("Enter %s", basedir)
+
         if not options.reference == "":
             git_url = os.path.join(options.reference.rstrip("/"), \
-                                   self.remote.get_relpath() + "/" + self.name + ".git")
+                                   self.remote.get_relpath() + "/" + self.name)
             if os.path.exists(git_url) and not os.listdir(git_url) == []:
                 self.url = git_url
                 
@@ -299,14 +297,20 @@ class PyGitProject(object):
         log.debug("Enter %s", basedir)
         
         if self.is_bare_mirror:
-            self.worktree = None
-            self.gitdir = os.path.abspath(self.name + ".git")
+            self.workdir = None
+            if self.name.endswith(".git"):
+                self.gitdir = os.path.abspath(self.name)
+            else:
+                self.gitdir = os.path.abspath(self.name + ".git")
         else:
             self.workdir = os.path.abspath(self.path)
             self.gitdir = self.workdir.rstrip("/") + "/.git"
-            
+
+        #log.debug("sync: workdir = '%s'", self.workdir)
+        #log.debug("sync: gitdir = '%s'", self.gitdir)
+
         if os.path.exists(self.gitdir) and not os.listdir(self.gitdir) == []:
-            # Fetch the project                   
+            # Fetch the project
             log.debug("Fetching %s", self.url)
             if self.is_bare_mirror:
                 err = self._update_mirror()
@@ -316,7 +320,7 @@ class PyGitProject(object):
                 log.error("Error occurs (%d). Abort", err)
                 return err
             if not self.revision == "" and not self.is_bare_mirror:
-                             
+                
                 refs_heads_path = os.path.join(self.gitdir, "/refs/heads/%s" % self.revision)
                 refs_tags_path = os.path.join(self.gitdir, "/refs/tags/%s" % self.revision)
                 
@@ -334,7 +338,7 @@ class PyGitProject(object):
             # Clone the project
             if not options.reference == "":
                 git_url = os.path.join(options.reference, \
-                                       self.remote.get_relpath() + "/" + self.name + ".git")
+                                       self.remote.get_relpath() + "/" + self.name)
                 if os.path.exists(git_url) and not os.listdir(git_url) == []:
                     # Update project fetch URL
                     self.url = git_url
@@ -357,15 +361,16 @@ class PyGitProject(object):
                         return err
         return err
     
-class PyGitRemote(object):
+class GittigRemote(object):
     
-    def __init__(self, name, fetch, in_config=False):
+    def __init__(self, name, fetch, in_config=False, is_dummy=False):
         self.name = name.rstrip("/")
         self.fetch = fetch
         self.projects = []
         self.vars = {}
         self.rules = {}
         self.is_in_config = in_config
+        self.is_dummy = is_dummy
         
     def get_relpath(self):
         remote_p = urlparse.urlparse(self.fetch)
@@ -404,12 +409,29 @@ class PyGitRemote(object):
     def get_rules(self):
         return self.rules
 
-class PyGitConfig(object):
+class GittigConfig(object):
 
-    def __init__(self, local_dir):
+    def __init__(self, local_dir, config_file=None):
         self.configs = {}
         self.remotes = []
         self.local_dir = local_dir
+        # Read configs from file
+        if config_file:
+            if os.path.isfile(config_file):
+                # Config file in provided path
+                log.info("Reading config file '%s'", os.path.abspath(config_file))
+                self.parse(config_file)
+            else:
+                optparser.error("Config file is not exist in provided path (--config)")
+        elif os.path.isfile(self.local_dir.rstrip("/") + "/" + CONFIG_FILE):
+            # Config file under mirror dir
+            config_file = self.local_dir.rstrip("/") + "/" + CONFIG_FILE
+            log.info("Reading config file '%s'", config_file)
+            self.parse(config_file)
+        elif os.path.isfile(os.path.abspath(CONFIG_FILE)):
+            # Config file under current directory
+            log.info("Reading config file '%s'", os.path.abspath(CONFIG_FILE))
+            self.parse(os.path.abspath(CONFIG_FILE))
 
     def parse(self, config_file):
         in_file = open(config_file)
@@ -426,7 +448,8 @@ class PyGitConfig(object):
                 remote_url = line[1:-1]
                 if not remote_url.startswith(CONFIG_KEYWORD):
                     assert "://" in remote_url, "URL schema is required in " + line
-                    git_remote = PyGitRemote("from_config", remote_url, True)       
+                    # Default remote name = 'from_config'
+                    git_remote = GittigRemote("from_config", remote_url, in_config=True)       
                     self.remotes.append(git_remote)
                     config_section = 0
                 else:
@@ -446,7 +469,7 @@ class PyGitConfig(object):
                         self.configs[fields[0][1:]] = fields[1]
                 else:
                     # Repository rule spec
-                    # <project-name> = <dest-path> or 'skip'
+                    # <project-name> = '<dest-path>' or 'skip'
                     if not config_section == 0:
                         assert False, "Syntax error: Rules are defined only within remote."
                     else:
@@ -509,12 +532,15 @@ class PyGitConfig(object):
     def add_project_to_remote(self, git_remote, git_project):
         return git_remote.add_project(git_project)
         
-class PyGitControl(object):
-        
+class GittigController(object):
+                    
     def scan_dir_for_projects(self, basedir):
         log.info("Scanning repos in '%s'...", basedir)
         for root, dirs, files in os.walk(basedir):
             if root.endswith(".git"):
+                # root is mirror repository
+                # Previously processed in parent dir
+                # Do not enter deeper
                 dirs[:]=[]
                 continue
             dirs.sort()
@@ -527,33 +553,53 @@ class PyGitControl(object):
                 # Later command on this remote doesn't use remote.fetch
                 dummy_remote = conf.find_remote("local_dir")
                 if dummy_remote == None:
-                    dummy_remote = PyGitRemote("local_dir", "")
+                    dummy_remote = GittigRemote("local_dir", root, is_dummy=True)
                     conf.add_remote(dummy_remote)                    
                 # Create a new project
-                log.debug("[1] remote=%s, p_name=%s", dummy_remote.name, p_name)
-                git_project = PyGitProject(p_name, p_name, dummy_remote, "")
+                #log.debug("[1] remote=%s, p_name=%s", dummy_remote.name, p_name)
+                git_project = GittigProject(p_name, p_name, dummy_remote, "")
                 # Add the project to remote
                 conf.add_project_to_remote(dummy_remote, git_project)
                 # Do not enter deeper
                 dirs[:] = []
-            else:    
+            elif "refs" in dirs and "objects" in dirs and "branches" in dirs:
+                # root doesn't end with ".git" but contains "refs", "objects", "branches" sub-dirs
+                # root is a mirror repository
+                # Project's name and project's path as relative path                    
+                p_name = root[len(basedir):]
+                # Dummy remote (TODO: get from working directory)
+                # Now, all projects are belong to 'local_dir' remote
+                # Later command on this remote doesn't use remote.fetch
+                dummy_remote = conf.find_remote("local_dir")
+                if dummy_remote == None:
+                    dummy_remote = GittigRemote("local_dir", root, is_dummy=True)
+                    conf.add_remote(dummy_remote)                    
+                # Create a new project
+                #log.debug("[2] remote=%s, p_name=%s", dummy_remote.name, p_name)
+                git_project = GittigProject(p_name, p_name, dummy_remote, is_bare_mirror=True)
+                # Add the project to remote
+                conf.add_project_to_remote(dummy_remote, git_project)
+                # Do not enter deeper
+                dirs[:]=[]
+                continue
+            else:
+                # Search for repositories which end with ".git" 
                 for d in dirs:            
                     if d.endswith(".git"):
-                        # d is a mirror
+                        # d is a mirror repository
                         abspath = os.path.join(root, d)
                         # Project's name and project's path as relative path                    
-                        p_name = abspath[len(basedir):-len(".git")]
+                        p_name = abspath[len(basedir):]#-len(".git")]
                         # Dummy remote (TODO: get from working directory)
                         # Now, all projects are belong to 'local_dir' remote
                         # Later command on this remote doesn't use remote.fetch
                         dummy_remote = conf.find_remote("local_dir")
                         if dummy_remote == None:
-                            dummy_remote = PyGitRemote("local_dir", "")
+                            dummy_remote = GittigRemote("local_dir", root, is_dummy=True)
                             conf.add_remote(dummy_remote)                    
                         # Create a new project
-                        log.debug("[2] remote=%s, p_name=%s", dummy_remote.name, p_name)
-                        git_project = PyGitProject(p_name, p_name, dummy_remote, "")
-                        git_project.is_bare_mirror = True
+                        #log.debug("[3] remote=%s, p_name=%s", dummy_remote.name, p_name)
+                        git_project = GittigProject(p_name, p_name, dummy_remote, is_bare_mirror=True)
                         # Add the project to remote
                         conf.add_project_to_remote(dummy_remote, git_project)
 
@@ -564,7 +610,7 @@ class PyGitControl(object):
         for r in dom.getElementsByTagName("remote"):
             r_name = r.getAttribute("name")
             r_fetch_url = r.getAttribute("fetch").rstrip("/")
-            git_remote = PyGitRemote(r_name, r_fetch_url)
+            git_remote = GittigRemote(r_name, r_fetch_url)
             conf.add_remote(git_remote)
         # Get default remote
         default_remote_alias = ""
@@ -594,9 +640,9 @@ class PyGitControl(object):
             if not git_remote == None:
                 log.debug("Add project '%s' for remote '%s'.", p_name, p_remote_alias)
                 if p_path == "":     
-                    git_project = PyGitProject(p_name, p_name, git_remote, p_revision)
+                    git_project = GittigProject(p_name, p_name, git_remote, p_revision)
                 else:
-                    git_project = PyGitProject(p_name, p_path, git_remote, p_revision)
+                    git_project = GittigProject(p_name, p_path, git_remote, p_revision)
                 if is_mirror:
                     git_project.is_bare_mirror = True
                 conf.add_project_to_remote(git_remote, git_project)
@@ -608,7 +654,7 @@ class PyGitControl(object):
         projects = remote.get_projects()
         rules = remote.get_rules()
         projects_d = []
-        log.debug("Remote %s ('%s'):", remote.name, remote.fetch)
+        log.debug("Remote '%s' ('%s'):", remote.name, remote.fetch)
         for p in projects:
             if rules.has_key(p.name):
                 val = rules.get(p.name)
@@ -686,7 +732,7 @@ class PyGitControl(object):
             log.info("Enter %s", basedir)
             for p in projects:
                 count = count + 1
-                log.info("Cloning projects: '%s' (%d/%d)", p.name, count, total)
+                log.info("Cloning project: '%s' (%d/%d)", p.name, count, total)
                 err = p.clone(basedir)
                 if not err == 0:
                     sys.exit(err)
@@ -707,71 +753,66 @@ class PyGitControl(object):
             log.info("Enter %s", basedir)
             for p in projects:
                 count = count + 1
-                log.info("Syncing projects: '%s' (%d/%d)", p.path, count, total)
+                log.info("Syncing project: '%s' (%d/%d)", p.path, count, total)
                 err = p.sync(basedir)
                 if not err == 0:
                     sys.exit(err)
                     
-def do_clone(control):
-    if options.manifest:
-        control.parse_manifest_for_projects(options.manifest, options.mirror)
-        for remote in conf.get_remotes(options.remote, options.ignore_remote):
-            projects = control.get_projects_for_a_remote(remote, options.project, options.ignore_project)
-            if len(projects) > 0:
-                if options.mirror:
-                    basedir = os.path.join(conf.get_local_dir(), remote.get_relpath())
-                else:
-                    basedir = conf.get_local_dir()
-                log.info("=== Processing: %s (%d Repositories) ===", remote.fetch, len(projects))
-                control.clone_projects(basedir, projects)
-    elif options.url:
-        projects = []
-        
-        s = options.url.rfind("/")
-        p_path = options.url[s+1:-len(".git")]
-        remote_url = options.url[:s]
-        dummy_remote = PyGitRemote("url", remote_url)
-        
-        git_project = PyGitProject(p_path, p_path, dummy_remote, "")
-        if options.mirror:
-            git_project.is_bare_mirror = True
-            basedir = os.path.join(conf.get_local_dir(), dummy_remote.get_relpath())
-        else:
-            basedir = conf.get_local_dir()
-        projects.append(git_project)
-        
-        log.info("=== Processing: %s (%d Repositories) ===", dummy_remote.fetch, len(projects))
-        control.clone_projects(basedir, projects)
-    else:
-        optparser.error("Please provide git project(s) by --manifest or --url")
-        
-def do_sync(control):
-    if options.manifest:
-        control.parse_manifest_for_projects(options.manifest, options.mirror)            
-        for remote in conf.get_remotes(options.remote, options.ignore_remote):
-            projects = control.get_projects_for_a_remote(remote, options.project, options.ignore_project)
-            if len(projects) > 0:
-                if options.mirror:
-                    basedir = os.path.join(conf.get_local_dir(), remote.get_relpath())
-                else:
-                    basedir = conf.get_local_dir()
-                log.info("=== Processing: %s (%d Repositories) ===", remote.fetch, len(projects))
-                control.sync_projects(basedir, projects)
-    else:
-        control.scan_dir_for_projects(conf.get_local_dir())
-        projects = control.get_all_projects(options.remote, options.ignore_remote, options.project, options.ignore_project)
-        if len(projects) > 0:
-            log.info("=== Processing: %d Repositories ===", len(projects))
-            control.sync_projects(conf.get_local_dir(), projects)
+    def do_clone(self):
+        if options.manifest:
+            self.parse_manifest_for_projects(options.manifest, options.mirror)
+            for remote in conf.get_remotes(options.remote, options.ignore_remote):
+                projects = self.get_projects_for_a_remote(remote, options.project, options.ignore_project)
+                if len(projects) > 0:
+                    if options.mirror:
+                        basedir = os.path.join(conf.get_local_dir(), remote.get_relpath())
+                    else:
+                        basedir = conf.get_local_dir()
+                    log.info("=== Processing: %s (%d Repositories) ===", remote.fetch, len(projects))
+                    self.clone_projects(basedir, projects)
+        elif options.url:
+            projects = []
             
-def do_sub_command(sub_command):
-    ctrl = PyGitControl()
-    if sub_command == "clone":
-        do_clone(ctrl)
-    elif sub_command == "sync":
-        do_sync(ctrl)
-    else:
-        optparser.error("Unknown command")
+            s = options.url.rfind("/")
+            p_path = options.url[s+1:]
+            remote_url = options.url[:s]
+
+            #log.debug("remote_url: '%s'", remote_url)
+            #log.debug("p_path: '%s'", p_path)
+
+            dummy_remote = GittigRemote("url", remote_url, is_dummy=True)
+            
+            git_project = GittigProject(p_path, p_path, dummy_remote)
+            if options.mirror:
+                git_project.is_bare_mirror = True
+                basedir = os.path.join(conf.get_local_dir(), dummy_remote.get_relpath())
+            else:
+                basedir = conf.get_local_dir()
+            projects.append(git_project)
+            
+            log.info("=== Processing: %s (%d Repositories) ===", dummy_remote.fetch, len(projects))
+            self.clone_projects(basedir, projects)
+        else:
+            optparser.error("Please provide git project(s) by --manifest or --url")
+        
+    def do_sync(self):
+        if options.manifest:
+            self.parse_manifest_for_projects(options.manifest, options.mirror)            
+            for remote in conf.get_remotes(options.remote, options.ignore_remote):
+                projects = self.get_projects_for_a_remote(remote, options.project, options.ignore_project)
+                if len(projects) > 0:
+                    if options.mirror:
+                        basedir = os.path.join(conf.get_local_dir(), remote.get_relpath())
+                    else:
+                        basedir = conf.get_local_dir()
+                    log.info("=== Processing: %s (%d Repositories) ===", remote.fetch, len(projects))
+                    self.sync_projects(basedir, projects)
+        else:
+            self.scan_dir_for_projects(conf.get_local_dir())
+            projects = self.get_all_projects(options.remote, options.ignore_remote, options.project, options.ignore_project)
+            if len(projects) > 0:
+                log.info("=== Processing: %d Repositories ===", len(projects))
+                self.sync_projects(conf.get_local_dir(), projects)
         
 def main():
     global conf
@@ -797,7 +838,6 @@ def main():
         options.ignore_project = re.split(',|;', options.ignore_project)
         log.debug("options.ignore_project=%s", options.ignore_project)
 
-    # Mirror directory settings
     if options.local_dir:
         # Provided path
         local_dir = os.path.abspath(options.local_dir)
@@ -808,26 +848,16 @@ def main():
     if not os.path.isdir(local_dir):
         optparser.error("Local dir is not exist in provided path (--local-dir or -d)")
           
-    conf = PyGitConfig(local_dir)
-    # Read configs from file
-    if options.config:
-        if os.path.isfile(options.config):
-            # Config file in provided path
-            log.info("Reading config file '%s'", os.path.abspath(options.config))
-            conf.parse(options.config)
-        else:
-            optparser.error("Config file is not exist in provided path (--config)")
-    elif os.path.isfile(conf.get_local_dir() + CONFIG_FILE):
-        # Config file under mirror dir
-        log.info("Reading config file '%s'", conf.get_local_dir() + "/" + CONFIG_FILE)
-        conf.parse(conf.get_local_dir() + CONFIG_FILE)
-    elif os.path.isfile(os.path.abspath(CONFIG_FILE)):
-        # Config file under current directory
-        log.info("Reading config file '%s'", os.path.abspath(CONFIG_FILE))
-        conf.parse(os.path.abspath(CONFIG_FILE))
+    conf = GittigConfig(local_dir, options.config)
+    controller = GittigController()
         
     try:
-        do_sub_command(args[0])
+        if args[0] == "clone":
+            controller.do_clone()
+        elif args[0] == "sync":
+            controller.do_sync()
+        else:
+            optparser.error("Unknown command")
         log.info("Done.")
     except KeyboardInterrupt:
         log.error("Interrupted by keyboard...exiting")
