@@ -2,6 +2,7 @@ Gittig
 =========
 
 Tool for mirroring/syncing git mirrors and git repos.
+
 Original ideas & Copyright: https://launchpad.net/linaro-android-gerrit-support
 
 * Mirror directory structure:
@@ -119,7 +120,7 @@ Original ideas & Copyright: https://launchpad.net/linaro-android-gerrit-support
           Enable debug logging
     </pre>
 
-* Config file: [**.pygit**]
+* Config file: [**.gittig**]
   * Syntax
     <pre>
     [CONFIG]
@@ -129,7 +130,7 @@ Original ideas & Copyright: https://launchpad.net/linaro-android-gerrit-support
     $var = val
     src-path = [local-path | skip]
     </pre>
-  * See example .pygit in this directory
+  * See example .gittig in this directory
 
 * Manifest file
   * Uses manifest file format of Google's repo tool
