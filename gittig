@@ -414,6 +414,8 @@ class GittigConfig(object):
     def __init__(self, local_dir, config_file=None):
         self.configs = {}
         self.remotes = []
+        self.default_remote_alias = ""
+        self.default_revision = ""
         self.local_dir = local_dir
         # Read configs from file
         if config_file:
@@ -488,6 +490,18 @@ class GittigConfig(object):
 
     def get_local_dir(self):
         return self.local_dir.rstrip("/") + "/"
+
+    def set_default_remote_alias(self, remote_alias):
+        self.default_remote_alias = remote_alias
+
+    def get_default_remote_alias(self):
+        return self.default_remote_alias
+
+    def set_default_revision(self, revision):
+        self.default_revision = revision
+
+    def get_default_revision(self):
+        return self.default_revision
 
     def add_remote(self, remote):
         for r in self.remotes:
@@ -605,23 +619,40 @@ class GittigController(object):
 
     def parse_manifest_for_projects(self, manifest, is_mirror=False):
         log.info("Parsing manifest file '%s'", os.path.abspath(manifest))
+        # Parse manifest file
         dom = minidom.parse(manifest)
-        # Get remote list
+        # Get remote list (<remote> tag)
         for r in dom.getElementsByTagName("remote"):
             r_name = r.getAttribute("name")
             r_fetch_url = r.getAttribute("fetch").rstrip("/")
             git_remote = GittigRemote(r_name, r_fetch_url)
             conf.add_remote(git_remote)
-        # Get default remote
+        # Get default element (<default> tag)
         default_remote_alias = ""
         default_revision = ""
-        default_conf = dom.getElementsByTagName("default")
-        if len(default_conf) >= 1:
-            if len(default_conf) > 1:
-                log.warning("Multiple default remote in manifest. Take only fist item")
-            default_remote_alias = default_conf[0].getAttribute("remote")
-            default_revision = default_conf[0].getAttribute("revision")
-        # Get all projects
+        default_element = dom.getElementsByTagName("default")
+        if len(default_element) >= 1:
+            if len(default_element) > 1:
+                log.warning("Multiple default element in manifest. Take only fist item")
+            default_remote_alias = default_element[0].getAttribute("remote")
+            default_revision = default_element[0].getAttribute("revision")
+            conf.set_default_remote_alias(default_remote_alias)
+            conf.set_default_revision(default_revision)
+        else:
+            default_remote_alias = conf.get_default_remote_alias()
+            default_revision = conf.get_default_revision()
+        # Get and parse included files (<include> tag)
+        for include_element in dom.getElementsByTagName("include"):
+            include_file = include_element.getAttribute("name")
+            manifest_parrent_dir = os.path.dirname(os.path.abspath(manifest))
+            include_file_path = os.path.join(manifest_parrent_dir, include_file)
+            log.debug("Include file: '%s'", include_file)
+            log.debug("Include file path: '%s'", include_file_path)
+            if os.path.isfile(include_file_path):
+                self.parse_manifest_for_projects(include_file_path, is_mirror)
+            else:
+                log.error("Invalid include file '%s' in manifest file '%s'", include_file, manifest)
+        # Get all projects (<project> tag)
         for p in dom.getElementsByTagName("project"):
             p_name = p.getAttribute("name")
             p_path = p.getAttribute("path")
