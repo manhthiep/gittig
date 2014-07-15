@@ -102,23 +102,26 @@ Original ideas & Copyright: https://launchpad.net/linaro-android-gerrit-support
           Path to manifest file
     --url=project-url
           URL of git project
-    --project=[project-local-path | project-name]
-          Project filter string
-    --remote=[remote-name | remote-url]
-          Remote filter string
+
     --mirror
           Enable mirror cloning/syncing
+          
     --local-dir=local-dir
           Working local directory (default is current directory)
+          
     --config=config-file
           Path to config file (default is in current directory)
     --reference=local-mirror-dir
           Path to local mirror directory
 
+    --project=project-local-path,project-name
+          Project include filter string, mutiple string allow (separated by comma)
+    --remote=remote-name,remote-url
+          Remote include filter string, mutiple string allow (separated by comma)
     --ignore-project=project-local-path,project-name
-          Project filter string, mutiple string allow (separated by comma)
+          Project exclude filter string, mutiple string allow (separated by comma)
     --ignore-remote=remote-name,remote-url
-          Remote filter string, mutilple string allow (separated by comma)
+          Remote exclude filter string, mutilple string allow (separated by comma)
 
     --dry-run
           Not actual run, only print verbose
