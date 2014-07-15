@@ -114,6 +114,12 @@ Original ideas & Copyright: https://launchpad.net/linaro-android-gerrit-support
           Path to config file (default is in current directory)
     --reference=local-mirror-dir
           Path to local mirror directory
+
+    --ignore-project=project-local-path,project-name
+          Project filter string, mutiple string allow (separated by comma)
+    --ignore-remote=remote-name,remote-url
+          Remote filter string, mutilple string allow (separated by comma)
+
     --dry-run
           Not actual run, only print verbose
     --debug
