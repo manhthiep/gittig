@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 # Original idea & copyright: https://launchpad.net/linaro-android-gerrit-support
-# Combination of git-mirror.py & git-repo.py
 #
-# gittig - v1.2
+# gittig - v1.3
 #
 # Use cases:
 # =====================
@@ -13,9 +12,9 @@
 # 1.2. Clone working dirs/mirrors from URL:
 #     gittig clone [--mirror] --url=<project-url>
 # 1.3. Clone from manifest file with project filters:
-#     gittig clone [--mirror] --manifest=<manifest-file> --project=<project-local-path/project-name>
+#     gittig clone [--mirror] --manifest=<manifest-file> --project=<project-local-path|project-name>
 # 1.4. Clone from manifest with remote (name/URL) filters
-#     gittig clone [--mirror] --manifest=<manirest-file> --remote=<remote-name/remote-url>
+#     gittig clone [--mirror] --manifest=<manirest-file> --remote=<remote-name|remote-url>
 # 1.5. Clone from manifest with reference mirrors:
 #     gittig clone [--mirror] --manifest=<manifest-file> --reference=<local-mirror-dir>
 #
@@ -28,34 +27,45 @@
 # 2.3. Sync working dirs/mirrors from manifest file (map to local directory):
 #    gittig sync [--mirror] --manifest=<manifest-file>
 # 2.4. Sync from manifest file with project filters:
-#    gittig sync [--mirror] --manifest=<manifest-file> --project=<project-local-path/project-name>
+#    gittig sync [--mirror] --manifest=<manifest-file> --project=<project-local-path|project-name>
 # 2.5. Sync from manifest with remote filters:
-#    gittig sync [--mirror] --manifest=<manifest-file> --remote=<remote-name/remote-url>
+#    gittig sync [--mirror] --manifest=<manifest-file> --remote=<remote-name|remote-url>
 # 2.6. Sync from manifest with reference mirrors:
 #    gittig sync [--mirror] --manifest=<manifest-file> --reference=<local-mirror-dir>
 #
 # All arguments:
 # =====================
+#   --local-dir=<local-dir>
+#         Working local directory (default is current directory)
+#   --dir=<local-dir>
+#         Working local directory (default is current directory)
 #   --manifest=<manifest-file>
 #         Path to manifest file
 #   --url=<project-url>
 #         URL of git project
-#   --project=<project-local-path/project-name>
-#         Project filter string, multiple string allow (separated by comma)
-#   --remote=<remote-name/remote-url>
-#         Remote filter string, multiple string allow (separated by comma)
+#
 #   --mirror
 #         Enable mirror cloning/syncing
-#   --local-dir=<local-dir>
-#         Working local directory (default is current directory)
-#   --config=<config-file>
-#         Path to config file (default is in current directory)
 #   --reference=<local-mirror-dir>
 #         Path to local mirror directory
+#
+#   --config=<config-file>
+#         Path to config file (default is in current directory)
+#
+#   --project=<project-local-path|project-name>
+#         Project filter (for including), multiple string allow (separated by comma)
+#   --remote=<remote-name|remote-url>
+#         Remote filter (for including), multiple string allow (separated by comma)
+
 #   --ignore-project=<project-local-path/project-name>
-#         Project filter string, mutiple string allow (separated by comma)
+#         Project filter string, mutiple strings allowed (separated by comma)
 #   --ignore-remote=<remote-name/remote-url>
-#         Remote filter string, mutilple string allow (separated by comma)
+#         Remote filter string, multiple strings allowed (separated by comma)
+#
+#   --exclude-project=<project-local-path|project-name>
+#         Project filter (for excluding), mutiple strings allowed (separated by comma)
+#   --exclude-remote=<remote-name|remote-url>
+#         Remote filter (for excluding), multiple strings allowed (separated by comma)
 #
 # Test and debug:
 # =====================
@@ -74,54 +84,79 @@ from xml.dom import minidom
 import traceback
 import subprocess
 import re
+from multiprocessing import Pool
 
 # Definition
 CONFIG_KEYWORD = "CONFIG"
-CONFIG_FILE = ".gittig"
+CONFIG_FILE = "Gittigfile"
 
 # Global variables
 conf = None
 options = None
 log = logging.getLogger(__file__)
 
-optparser = optparse.OptionParser(usage="""%prog <options> <command> <args>...
+results = []
+pool = None
+abort_requested = False
+
+optparser = optparse.OptionParser(
+	usage="""%prog <command> <options> <args>...
 
 Command:
-  clone  - Clone any new projects from source (based on config & manifest)
-  sync   - Sync remote updates (based on working copy or manifest)""")
+  clone  - Clone new project(s) (based on config and URL or manifest)
+  sync   - Sync existing project(s) (based on working copy or manifest)""")
 
-optparser.add_option("-d", "--local-dir", metavar="DIR",
-             dest="local_dir",
-             help="Local root directory")
-optparser.add_option("-c","--config", default=None,
+optparser.add_option("--config", default=None,
              dest="config",
-             help="Config file to use (%default)")
+             help="Path to config file (default: %default)")
+
+optparser.add_option("-d", "--dir", metavar="DIR",
+             dest="local_dir",
+             help="Local root directory (default: current directory)")
+optparser.add_option("--local-dir", metavar="DIR",
+             dest="local_dir",
+             help="Local root directory (default: current directory)")
 optparser.add_option("-m","--manifest", metavar="NAME.xml",
              dest="manifest",
-             help="Use manifest for list of projects")
+             help="Path to manifest contains list of projects")
 optparser.add_option("-u","--url", metavar="URL",
              dest="url",
              help="URL to single git project")
-optparser.add_option("-p", "--project", metavar="SUBSTR", default="",
-             dest="project", 
-             help="Project projects have name or local path matching filter string")
-optparser.add_option("-r","--remote", metavar="SUBSTR", default="",
-             dest="remote",
-             help="Process remotes matching filter string")
-optparser.add_option("--ignore-project", metavar="SUBSTR", default="",
-             dest="ignore_project", 
-             help="Do not process projects have name or local path matching filter string")
-optparser.add_option("--ignore-remote", metavar="SUBSTR", default="",
-             dest="ignore_remote",
-             help="Do not process remotes matching filter string")
+
 optparser.add_option("--reference", metavar="DIR", default="",
              dest="reference",
              help="Reference to mirror directory")
 optparser.add_option("--mirror", action="store_true",
-             help="Clone the mirror projects (only for 'clone' command)")
+             help="Clone or sync mirror projects")
+
+optparser.add_option("-p", "--project", metavar="SUBSTR", default="",
+             dest="project", 
+             help="Process projects have name or local path matches filter string")
+optparser.add_option("-r","--remote", metavar="SUBSTR", default="",
+             dest="remote",
+             help="Process remotes have name matches filter string")
+
+optparser.add_option("--ignore-project", metavar="SUBSTR", default="",
+             dest="excluded_projects", 
+             help="Do not process projects have name or local path matches filter string")
+optparser.add_option("--ignore-remote", metavar="SUBSTR", default="",
+             dest="excluded_remotes",
+             help="Do not process remotes matches filter string")
+
+optparser.add_option("--exclude-project", metavar="SUBSTR", default="",
+             dest="excluded_projects", 
+             help="Do not process projects have name or local path matches filter string")
+optparser.add_option("--exclude-remote", metavar="SUBSTR", default="",
+             dest="excluded_remotes",
+             help="Do not process remotes matches filter string")
+
+optparser.add_option("--jobs", type="int", default=0,
+             dest="jobs",
+             help="Specified parallel jobs")
+
 optparser.add_option("--dry-run", action="store_true",
              help="Don't make any changes")
-optparser.add_option("-D","--debug", action="store_true",
+optparser.add_option("--debug", action="store_true",
              dest="debug",
              help="Enable debug logging")
 
@@ -763,15 +798,21 @@ class GittigController(object):
             log.info("Enter %s", basedir)
             for p in projects:
                 count = count + 1
-                log.info("Cloning project: '%s' (%d/%d)", p.name, count, total)
-                err = p.clone(basedir)
-                if not err == 0:
-                    sys.exit(err)
+                if not pool == None:
+                    pool.apply_async(clone_project, args = (p, basedir, count, total,), callback=log_result)
+                else:
+                    #log.info("Cloning project: '%s' (%d/%d)", p.name, count, total)
+                    err = clone_project(p, basedir, count, total)
+                    if not err == 0:
+                        sys.exit(err)
+            if not pool == None:
+                pool.close()
+                pool.join()
 
     def sync_projects(self, basedir, projects):
         """Update projects from remote server"""
-        count = 0
         err = 0
+        count = 0
         total = len(projects)
         if total == 0:
             log.warning("Nothing to sync.")
@@ -784,16 +825,22 @@ class GittigController(object):
             log.info("Enter %s", basedir)
             for p in projects:
                 count = count + 1
-                log.info("Syncing project: '%s' (%d/%d)", p.path, count, total)
-                err = p.sync(basedir)
-                if not err == 0:
-                    sys.exit(err)
-                    
+                if not pool == None:
+                    pool.apply_async(sync_project, args = (p, basedir, count, total,), callback=log_result)
+                else:
+                    #log.info("Syncing project: '%s' (%d/%d)", p.path, count, total)
+                    err = sync_project(p, basedir, count, total)
+                    if not err == 0:
+                        sys.exit(err)
+            if not pool == None:
+                pool.close()
+                pool.join()
+    
     def do_clone(self):
         if options.manifest:
             self.parse_manifest_for_projects(options.manifest, options.mirror)
-            for remote in conf.get_remotes(options.remote, options.ignore_remote):
-                projects = self.get_projects_for_a_remote(remote, options.project, options.ignore_project)
+            for remote in conf.get_remotes(options.remote, options.excluded_remotes):
+                projects = self.get_projects_for_a_remote(remote, options.project, options.excluded_projects)
                 if len(projects) > 0:
                     if options.mirror:
                         basedir = os.path.join(conf.get_local_dir(), remote.get_relpath())
@@ -829,8 +876,8 @@ class GittigController(object):
     def do_sync(self):
         if options.manifest:
             self.parse_manifest_for_projects(options.manifest, options.mirror)            
-            for remote in conf.get_remotes(options.remote, options.ignore_remote):
-                projects = self.get_projects_for_a_remote(remote, options.project, options.ignore_project)
+            for remote in conf.get_remotes(options.remote, options.excluded_remotes):
+                projects = self.get_projects_for_a_remote(remote, options.project, options.excluded_projects)
                 if len(projects) > 0:
                     if options.mirror:
                         basedir = os.path.join(conf.get_local_dir(), remote.get_relpath())
@@ -840,11 +887,30 @@ class GittigController(object):
                     self.sync_projects(basedir, projects)
         else:
             self.scan_dir_for_projects(conf.get_local_dir())
-            projects = self.get_all_projects(options.remote, options.ignore_remote, options.project, options.ignore_project)
+            projects = self.get_all_projects(options.remote, options.excluded_remotes, options.project, options.excluded_projects)
             if len(projects) > 0:
                 log.info("=== Processing: %d Repositories ===", len(projects))
                 self.sync_projects(conf.get_local_dir(), projects)
-        
+
+def sync_project(project, basedir, count, total):
+    """Sync single project"""
+    if abort_requested:
+        return 0
+    log.info("Syncing project: '%s' (%d/%d)", project.path, count, total)
+    err = project.sync(basedir)
+    return err
+
+def clone_project(project, basedir, count, total):
+    """Clone single project"""
+    if abort_requested:
+        return 0
+    log.info("Cloning project: '%s' (%d/%d)", project.path, count, total)
+    err = project.clone(basedir)
+    return err
+
+def log_result(result):
+    results.append(result)
+
 def main():
     global conf
     global options
@@ -859,15 +925,15 @@ def main():
     if options.remote != "":
         options.remote = re.split(',|;', options.remote)
         log.debug("options.remote=%s", options.remote)
-    if options.ignore_remote != "":
-        options.ignore_remote = re.split(',|;', options.ignore_remote)
-        log.debug("options.ignore_remote=%s", options.ignore_remote)
+    if options.excluded_remotes != "":
+        options.excluded_remotes = re.split(',|;', options.excluded_remotes)
+        log.debug("options.excluded_remotes=%s", options.excluded_remotes)
     if options.project != "":
         options.project = re.split(',|;', options.project)
         log.debug("options.project=%s", options.project)
-    if options.ignore_project != "":
-        options.ignore_project = re.split(',|;', options.ignore_project)
-        log.debug("options.ignore_project=%s", options.ignore_project)
+    if options.excluded_projects != "":
+        options.excluded_projects = re.split(',|;', options.excluded_projects)
+        log.debug("options.excluded_projects=%s", options.excluded_projects)
 
     if options.local_dir:
         # Provided path
@@ -878,7 +944,11 @@ def main():
 
     if not os.path.isdir(local_dir):
         optparser.error("Local dir is not exist in provided path (--local-dir or -d)")
-          
+    
+    if options.jobs > 0:
+        log.debug("options.jobs=%d", options.jobs)
+        pool = Pool(processes=options.jobs)
+
     conf = GittigConfig(local_dir, options.config)
     controller = GittigController()
         
@@ -892,6 +962,9 @@ def main():
         log.info("Done.")
     except KeyboardInterrupt:
         log.error("Interrupted by keyboard...exiting")
+        if not pool == None:
+            abort_requested = True
+            pool.terminate()
     except Exception:
         traceback.print_exc(file=sys.stdout)    
     sys.exit(0)
