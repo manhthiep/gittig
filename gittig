@@ -84,7 +84,8 @@ from xml.dom import minidom
 import traceback
 import subprocess
 import re
-from multiprocessing import Pool
+import multiprocessing
+import signal
 
 # Definition
 CONFIG_KEYWORD = "CONFIG"
@@ -95,9 +96,12 @@ conf = None
 options = None
 log = logging.getLogger(__file__)
 
+count = 0
+total = 0
 results = []
 pool = None
-abort_requested = False
+aborted = False
+parallel_mode = False
 
 optparser = optparse.OptionParser(
 	usage="""%prog <command> <options> <args>...
@@ -784,6 +788,10 @@ class GittigController(object):
 
     def clone_projects(self, basedir, projects):
         """Clone projects from remote server"""
+        global parallel_mode
+        global pool
+        global count
+        global total
         count = 0
         total = len(projects)
         if total == 0:
@@ -796,21 +804,25 @@ class GittigController(object):
                     pass
             os.chdir(basedir)
             log.info("Enter %s", basedir)
-            for p in projects:
-                count = count + 1
-                if not pool == None:
-                    pool.apply_async(clone_project, args = (p, basedir, count, total,), callback=log_result)
-                else:
-                    #log.info("Cloning project: '%s' (%d/%d)", p.name, count, total)
+            if parallel_mode:
+                for p in projects:
+                    count = count + 1
+                    pool.apply_async(clone_project, args=(p, basedir, count, total,), callback=log_result)
+                pool.close()
+                pool.join()
+            else:
+                for p in projects:
+                    count = count + 1
                     err = clone_project(p, basedir, count, total)
                     if not err == 0:
                         sys.exit(err)
-            if not pool == None:
-                pool.close()
-                pool.join()
 
     def sync_projects(self, basedir, projects):
         """Update projects from remote server"""
+        global parallel_mode
+        global pool
+        global count
+        global total
         err = 0
         count = 0
         total = len(projects)
@@ -823,18 +835,18 @@ class GittigController(object):
                except OSError:
                    pass 
             log.info("Enter %s", basedir)
-            for p in projects:
-                count = count + 1
-                if not pool == None:
-                    pool.apply_async(sync_project, args = (p, basedir, count, total,), callback=log_result)
-                else:
-                    #log.info("Syncing project: '%s' (%d/%d)", p.path, count, total)
+            if parallel_mode:
+                for p in projects:
+                    count = count + 1
+                    pool.apply_async(sync_project, args=(p, basedir, count, total,), callback=log_result)
+                pool.close()
+                pool.join()
+            else:
+                for p in projects:
+                    count = count + 1
                     err = sync_project(p, basedir, count, total)
                     if not err == 0:
                         sys.exit(err)
-            if not pool == None:
-                pool.close()
-                pool.join()
     
     def do_clone(self):
         if options.manifest:
@@ -892,18 +904,22 @@ class GittigController(object):
                 log.info("=== Processing: %d Repositories ===", len(projects))
                 self.sync_projects(conf.get_local_dir(), projects)
 
+def init_worker():
+    signal.signal(signal.SIGINT, signal.SIG_IGN)
+
 def sync_project(project, basedir, count, total):
     """Sync single project"""
-    if abort_requested:
-        return 0
+    global aborted
+    if aborted:
+        return (-1)
     log.info("Syncing project: '%s' (%d/%d)", project.path, count, total)
     err = project.sync(basedir)
+    if not err == 0:
+        aborted = True
     return err
 
 def clone_project(project, basedir, count, total):
     """Clone single project"""
-    if abort_requested:
-        return 0
     log.info("Cloning project: '%s' (%d/%d)", project.path, count, total)
     err = project.clone(basedir)
     return err
@@ -914,6 +930,9 @@ def log_result(result):
 def main():
     global conf
     global options
+    global pool
+    global parallel_mode
+    global aborted
 
     options, args = optparser.parse_args(sys.argv[1:])
     if len(args) < 1:
@@ -947,7 +966,8 @@ def main():
     
     if options.jobs > 0:
         log.debug("options.jobs=%d", options.jobs)
-        pool = Pool(processes=options.jobs)
+        pool = multiprocessing.Pool(processes=options.jobs, initializer=init_worker)
+        parallel_mode = True
 
     conf = GittigConfig(local_dir, options.config)
     controller = GittigController()
@@ -962,9 +982,10 @@ def main():
         log.info("Done.")
     except KeyboardInterrupt:
         log.error("Interrupted by keyboard...exiting")
-        if not pool == None:
-            abort_requested = True
+        aborted = True
+        if parallel_mode:
             pool.terminate()
+            pool.join()
     except Exception:
         traceback.print_exc(file=sys.stdout)    
     sys.exit(0)
