@@ -920,8 +920,13 @@ def sync_project(project, basedir, count, total):
 
 def clone_project(project, basedir, count, total):
     """Clone single project"""
+    global aborted
+    if aborted:
+        return (-1)
     log.info("Cloning project: '%s' (%d/%d)", project.path, count, total)
     err = project.clone(basedir)
+    if not err == 0:
+        aborted = True
     return err
 
 def log_result(result):
