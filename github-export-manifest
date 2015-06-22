@@ -115,7 +115,7 @@ class GittigController(object):
         # github remote element
         github_remote_element = doc.createElement("remote")
         github_remote_element.setAttribute("name", "github")
-        github_remote_element.setAttribute("fetch", "git://github.com/")
+        github_remote_element.setAttribute("fetch", "https://github.com/")
         manifest_element.appendChild(github_remote_element)
         
         # default element
