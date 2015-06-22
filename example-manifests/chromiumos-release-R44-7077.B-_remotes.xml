@@ -1,0 +1,5 @@
+<manifest>
+  <remote fetch="https://chromium.googlesource.com" name="cros" review="https://chromium-review.googlesource.com" />
+  <remote alias="cros" fetch="https://chromium.googlesource.com/" name="chromium" />
+  <remote fetch="https://android.googlesource.com" name="aosp" review="https://android-review.googlesource.com" />
+</manifest>
