@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="mozilla-b2g/adb-push"/>
+  <project name="mozilla-b2g/android-development" revision="b2g-gingerbread"/>
+  <project name="mozilla-b2g/android-device-crespo"/>
+  <project name="mozilla-b2g/android-device-crespo4g"/>
+  <project name="mozilla-b2g/android-device-galaxys2"/>
+  <project name="mozilla-b2g/android-device-hamachi"/>
+  <project name="mozilla-b2g/android-device-m4"/>
+  <project name="mozilla-b2g/android-device-maguro"/>
+  <project name="mozilla-b2g/android-device-otoro"/>
+  <project name="mozilla-b2g/android-device-panda"/>
+  <project name="mozilla-b2g/android-device-tuna"/>
+  <project name="mozilla-b2g/android-device-unagi"/>
+  <project name="mozilla-b2g/android-hardware-libhardware"/>
+  <project name="mozilla-b2g/android-hardware-ril"/>
+  <project name="mozilla-b2g/android-hardware_legacy"/>
+  <project name="mozilla-b2g/android-sdk" revision="b2g-gingerbread-release"/>
+  <project name="mozilla-b2g/android-system-vold" revision="b2g-gingerbread"/>
+  <project name="mozilla-b2g/android_system_bluetooth" revision="gingerbread"/>
+  <project name="mozilla-b2g/automation-projects"/>
+  <project name="mozilla-b2g/B2G"/>
+  <project name="mozilla-b2g/b2g-dashboard"/>
+  <project name="mozilla-b2g/b2g-manifest"/>
+  <project name="mozilla-b2g/b2g-toolchains"/>
+  <project name="mozilla-b2g/b2gmonkey"/>
+  <project name="mozilla-b2g/bisect_b2g"/>
+  <project name="mozilla-b2g/bleach.js" revision="worker-thread-friendly"/>
+  <project name="mozilla-b2g/boing"/>
+  <project name="mozilla-b2g/brcm_usrlib_dag"/>
+  <project name="mozilla-b2g/busybox"/>
+  <project name="mozilla-b2g/bzlite"/>
+  <project name="mozilla-b2g/caldav"/>
+  <project name="mozilla-b2g/classic-homescreen"/>
+  <project name="mozilla-b2g/codeaurora_kernel_msm" revision="b2g-msm-hammerhead-3.4-lollipop-release"/>
+  <project name="mozilla-b2g/darwinstreamingserver"/>
+  <project name="mozilla-b2g/device-aries"/>
+  <project name="mozilla-b2g/device-flame"/>
+  <project name="mozilla-b2g/device-flatfish"/>
+  <project name="mozilla-b2g/device-flo"/>
+  <project name="mozilla-b2g/device-fugu"/>
+  <project name="mozilla-b2g/device-gp-keon"/>
+  <project name="mozilla-b2g/device-grouper" revision="jb-b2g"/>
+  <project name="mozilla-b2g/device-hammerhead"/>
+  <project name="mozilla-b2g/device-helix"/>
+  <project name="mozilla-b2g/device-inari"/>
+  <project name="mozilla-b2g/device-leo"/>
+  <project name="mozilla-b2g/device-mako" revision="b2g-4.2.2_r1"/>
+  <project name="mozilla-b2g/device-rpi"/>
+  <project name="mozilla-b2g/device-shinano"/>
+  <project name="mozilla-b2g/device-shinano-common"/>
+  <project name="mozilla-b2g/device-sony-aries"/>
+  <project name="mozilla-b2g/device-sony-leo"/>
+  <project name="mozilla-b2g/device-sony-shinano"/>
+  <project name="mozilla-b2g/device-sora"/>
+  <project name="mozilla-b2g/device-wasabi"/>
+  <project name="mozilla-b2g/device_generic_goldfish"/>
+  <project name="mozilla-b2g/device_lge_hammerhead-kernel"/>
+  <project name="mozilla-b2g/device_lge_mako-kernel"/>
+  <project name="mozilla-b2g/dogdish"/>
+  <project name="mozilla-b2g/dogfood-setup"/>
+  <project name="mozilla-b2g/exif-parser"/>
+  <project name="mozilla-b2g/fake-dalvik"/>
+  <project name="mozilla-b2g/fake-libdvm"/>
+  <project name="mozilla-b2g/firefoxos-loop-client"/>
+  <project name="mozilla-b2g/fxos-appgen"/>
+  <project name="mozilla-b2g/fxos-certsuite"/>
+  <project name="mozilla-b2g/fxos.cdn.mozilla.net"/>
+  <project name="mozilla-b2g/gaia"/>
+  <project name="mozilla-b2g/gaia-botio-scripts"/>
+  <project name="mozilla-b2g/gaia-email-libs-and-more"/>
+  <project name="mozilla-b2g/gaia-node-modules"/>
+  <project name="mozilla-b2g/gaia-preload"/>
+  <project name="mozilla-b2g/gaia-profile-builder"/>
+  <project name="mozilla-b2g/gaia-specs"/>
+  <project name="mozilla-b2g/gaia-taskenv"/>
+  <project name="mozilla-b2g/Gaia-UI-Building-Blocks"/>
+  <project name="mozilla-b2g/gecko-periodic-tasks"/>
+  <project name="mozilla-b2g/gonk-ics-manifest"/>
+  <project name="mozilla-b2g/gonk-misc"/>
+  <project name="mozilla-b2g/gonk-patches"/>
+  <project name="mozilla-b2g/haida-planning"/>
+  <project name="mozilla-b2g/hardware_qcom_display"/>
+  <project name="mozilla-b2g/i2c-tools"/>
+  <project name="mozilla-b2g/initramfs-galaxy-s2-ics"/>
+  <project name="mozilla-b2g/init_sh"/>
+  <project name="mozilla-b2g/js-test-agent"/>
+  <project name="mozilla-b2g/jsas"/>
+  <project name="mozilla-b2g/jswbxml"/>
+  <project name="mozilla-b2g/kernel-android-galaxy-s2-ics"/>
+  <project name="mozilla-b2g/kernel-omap" revision="current"/>
+  <project name="mozilla-b2g/kernel_flatfish" revision="lkcl-3.3-a20"/>
+  <project name="mozilla-b2g/kernel_goldfish"/>
+  <project name="mozilla-b2g/kernel_lk" revision="foxfone-one"/>
+  <project name="mozilla-b2g/libnfcemu"/>
+  <project name="mozilla-b2g/librecovery"/>
+  <project name="mozilla-b2g/mail-fakeservers"/>
+  <project name="mozilla-b2g/marionette-apps"/>
+  <project name="mozilla-b2g/marionette-b2gdesktop-host"/>
+  <project name="mozilla-b2g/marionette-content-script"/>
+  <project name="mozilla-b2g/marionette-debug"/>
+  <project name="mozilla-b2g/marionette-debug-server"/>
+  <project name="mozilla-b2g/marionette-device-host"/>
+  <project name="mozilla-b2g/marionette-extension"/>
+  <project name="mozilla-b2g/marionette-file-manager"/>
+  <project name="mozilla-b2g/marionette-firefox-host"/>
+  <project name="mozilla-b2g/marionette-helper"/>
+  <project name="mozilla-b2g/marionette-js-client"/>
+  <project name="mozilla-b2g/marionette-js-logger"/>
+  <project name="mozilla-b2g/marionette-js-runner"/>
+  <project name="mozilla-b2g/marionette-orientation"/>
+  <project name="mozilla-b2g/marionette-plugin-forms"/>
+  <project name="mozilla-b2g/marionette-profile-builder"/>
+  <project name="mozilla-b2g/marionette-settings-api"/>
+  <project name="mozilla-b2g/minimal_prebuilt"/>
+  <project name="mozilla-b2g/mkqcdtbootimg"/>
+  <project name="mozilla-b2g/mocha-json-proxy"/>
+  <project name="mozilla-b2g/mocha-socket-reporter"/>
+  <project name="mozilla-b2g/mocha-tbpl-reporter"/>
+  <project name="mozilla-b2g/mocha-tdd-retry"/>
+  <project name="mozilla-b2g/mozilla-detect-os"/>
+  <project name="mozilla-b2g/mozilla-download"/>
+  <project name="mozilla-b2g/mozilla-extract"/>
+  <project name="mozilla-b2g/mozilla-get-url"/>
+  <project name="mozilla-b2g/mozilla-profile-builder"/>
+  <project name="mozilla-b2g/mozilla-runner"/>
+  <project name="mozilla-b2g/moztt"/>
+  <project name="mozilla-b2g/node-uuid"/>
+  <project name="mozilla-b2g/notes"/>
+  <project name="mozilla-b2g/npm-mirror"/>
+  <project name="mozilla-b2g/ntpclient-android"/>
+  <project name="mozilla-b2g/orangutan"/>
+  <project name="mozilla-b2g/platform_bionic"/>
+  <project name="mozilla-b2g/platform_bootable_recovery" revision="foxfone-one"/>
+  <project name="mozilla-b2g/platform_build"/>
+  <project name="mozilla-b2g/platform_external_apriori"/>
+  <project name="mozilla-b2g/platform_external_bluetooth_bluedroid"/>
+  <project name="mozilla-b2g/platform_external_dbus"/>
+  <project name="mozilla-b2g/platform_external_elfcopy"/>
+  <project name="mozilla-b2g/platform_external_elfutils"/>
+  <project name="mozilla-b2g/platform_external_libnfc-nci" revision="b2g-4.3_r2.1"/>
+  <project name="mozilla-b2g/platform_external_libnfc-pn547"/>
+  <project name="mozilla-b2g/platform_external_libpng"/>
+  <project name="mozilla-b2g/platform_external_opensans"/>
+  <project name="mozilla-b2g/platform_external_oprofile" revision="b2g-gingerbread"/>
+  <project name="mozilla-b2g/platform_external_qemu"/>
+  <project name="mozilla-b2g/platform_external_webrtc"/>
+  <project name="mozilla-b2g/platform_external_wpa_supplicant_8" revision="b2g-4.4.2_r1"/>
+  <project name="mozilla-b2g/platform_frameworks_av"/>
+  <project name="mozilla-b2g/platform_frameworks_base"/>
+  <project name="mozilla-b2g/platform_frameworks_wilhelm"/>
+  <project name="mozilla-b2g/platform_hardware_libhardware"/>
+  <project name="mozilla-b2g/platform_hardware_libhardware_legacy"/>
+  <project name="mozilla-b2g/platform_hardware_realtek"/>
+  <project name="mozilla-b2g/platform_hardware_ril"/>
+  <project name="mozilla-b2g/platform_prebuilt" revision="b2g-gingerbread-release"/>
+  <project name="mozilla-b2g/platform_prebuilts_misc"/>
+  <project name="mozilla-b2g/platform_prebuilts_qemu-kernel"/>
+  <project name="mozilla-b2g/platform_system_bluetoothd"/>
+  <project name="mozilla-b2g/platform_system_core"/>
+  <project name="mozilla-b2g/platform_system_libfdio"/>
+  <project name="mozilla-b2g/platform_system_netd"/>
+  <project name="mozilla-b2g/platform_system_nfcd"/>
+  <project name="mozilla-b2g/preload-app-toolkit"/>
+  <project name="mozilla-b2g/qa-testcase-data" revision="gh-pages"/>
+  <project name="mozilla-b2g/raptor"/>
+  <project name="mozilla-b2g/raptor-ui"/>
+  <project name="mozilla-b2g/rilproxy"/>
+  <project name="mozilla-b2g/rpi-linux" revision="rpi-gonk-3.12.y"/>
+  <project name="mozilla-b2g/screencap-gonk"/>
+  <project name="mozilla-b2g/skia-b2g-sgs2"/>
+  <project name="mozilla-b2g/sockit-to-me"/>
+  <project name="mozilla-b2g/testdroid-client"/>
+  <project name="mozilla-b2g/thermanager"/>
+  <project name="mozilla-b2g/timekeep"/>
+  <project name="mozilla-b2g/travis-project-jobs"/>
+  <project name="mozilla-b2g/ubersicht" revision="gh-pages"/>
+  <project name="mozilla-b2g/unbootimg"/>
+  <project name="mozilla-b2g/uplift"/>
+  <project name="mozilla-b2g/valgrind"/>
+  <project name="mozilla-b2g/vendor-sony-kernel"/>
+  <project name="mozilla-b2g/vendor_broadcom_wlan" revision="shinano"/>
+  <project name="mozilla-b2g/vex"/>
+  <project name="mozilla-b2g/wpa_supplicant_8_lib"/>
+</manifest>

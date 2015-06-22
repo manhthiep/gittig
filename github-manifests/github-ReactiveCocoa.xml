@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="ReactiveCocoa/EditableProperty"/>
+  <project name="ReactiveCocoa/LlamaKit"/>
+  <project name="ReactiveCocoa/ReactiveAnimation"/>
+  <project name="ReactiveCocoa/ReactiveAnimation-MacDemo"/>
+  <project name="ReactiveCocoa/ReactiveCocoa" revision="swift-development"/>
+  <project name="ReactiveCocoa/ReactiveCocoa.github.io" revision="site"/>
+  <project name="ReactiveCocoa/ReactiveCocoaIO"/>
+  <project name="ReactiveCocoa/ReactiveCocoaLayout"/>
+  <project name="ReactiveCocoa/ReactiveViewModel"/>
+  <project name="ReactiveCocoa/RockemSockem"/>
+</manifest>

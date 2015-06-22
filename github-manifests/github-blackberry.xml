@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="blackberry/Adafruit_NFCShield_I2C"/>
+  <project name="blackberry/Alice"/>
+  <project name="blackberry/ALUT"/>
+  <project name="blackberry/bb-cascades-oauth"/>
+  <project name="blackberry/BB10-UnitTestMocks"/>
+  <project name="blackberry/BB10-WebWorks-Community-Samples"/>
+  <project name="blackberry/BB10-WebWorks-Framework"/>
+  <project name="blackberry/BB10-Webworks-Packager"/>
+  <project name="blackberry/BB10-WebWorks-Samples"/>
+  <project name="blackberry/bbUI.js"/>
+  <project name="blackberry/BES10-Cascades"/>
+  <project name="blackberry/BES10-WebWorks"/>
+  <project name="blackberry/blackberry.github.com"/>
+  <project name="blackberry/Boost" revision="1_48_0-gnu"/>
+  <project name="blackberry/Box2D"/>
+  <project name="blackberry/Bullet"/>
+  <project name="blackberry/BWS-Samples"/>
+  <project name="blackberry/Cascades-Community-Samples"/>
+  <project name="blackberry/Cascades-Samples"/>
+  <project name="blackberry/Catalogs" revision="gh-pages"/>
+  <project name="blackberry/Cocos2D-X"/>
+  <project name="blackberry/Community" revision="gh-pages"/>
+  <project name="blackberry/Community-APIs-for-AIR"/>
+  <project name="blackberry/Construct2Plugins"/>
+  <project name="blackberry/cordova-blackberry"/>
+  <project name="blackberry/cordova-blackberry-plugins"/>
+  <project name="blackberry/cordova-cli"/>
+  <project name="blackberry/cordova-docs"/>
+  <project name="blackberry/cordova-js"/>
+  <project name="blackberry/cordova-mobile-spec"/>
+  <project name="blackberry/cordova-plugman"/>
+  <project name="blackberry/Cordova-Samples"/>
+  <project name="blackberry/Core-Native-Community-Samples"/>
+  <project name="blackberry/CouchDB" revision="trunk"/>
+  <project name="blackberry/CppUnit"/>
+  <project name="blackberry/DosBox"/>
+  <project name="blackberry/Eclipse-JDE"/>
+  <project name="blackberry/Erlang-OTP"/>
+  <project name="blackberry/GamePlay"/>
+  <project name="blackberry/GetOpt"/>
+  <project name="blackberry/hadoop-logdriver"/>
+  <project name="blackberry/JDE-Samples"/>
+  <project name="blackberry/jQueryMobile-BB10-Theme"/>
+  <project name="blackberry/jQueryMobile-Samples"/>
+  <project name="blackberry/JSON_parser"/>
+  <project name="blackberry/libqrencode"/>
+  <project name="blackberry/Lua"/>
+  <project name="blackberry/MomenticsUnitTestingPlugin"/>
+  <project name="blackberry/NDK-Samples"/>
+  <project name="blackberry/NME"/>
+  <project name="blackberry/OData-BB10"/>
+  <project name="blackberry/OggVorbis"/>
+  <project name="blackberry/OGRE"/>
+  <project name="blackberry/OpenAL"/>
+  <project name="blackberry/OpenCV" revision="2_4_1"/>
+  <project name="blackberry/opendataspace-bbjava"/>
+  <project name="blackberry/opendataspace-cascades"/>
+  <project name="blackberry/OpenGLES-Samples"/>
+  <project name="blackberry/OpenNebula-Carina"/>
+  <project name="blackberry/OpenTTD"/>
+  <project name="blackberry/PCRE"/>
+  <project name="blackberry/PictureWall"/>
+  <project name="blackberry/Presentations"/>
+  <project name="blackberry/Python"/>
+  <project name="blackberry/Qt"/>
+  <project name="blackberry/Qt2Cascades-Samples"/>
+  <project name="blackberry/QtLocationSubset"/>
+  <project name="blackberry/QtNfcSubset"/>
+  <project name="blackberry/QTweetLib"/>
+  <project name="blackberry/Quake3"/>
+  <project name="blackberry/RecastNavigation"/>
+  <project name="blackberry/Ripple-Framework"/>
+  <project name="blackberry/Ripple-UI"/>
+  <project name="blackberry/Samples-for-AIR"/>
+  <project name="blackberry/Samples-for-Java"/>
+  <project name="blackberry/Samples-for-PhoneGap"/>
+  <project name="blackberry/SBuilder"/>
+  <project name="blackberry/Scoreloop-Samples" revision="BB10.0.09"/>
+  <project name="blackberry/SDL" revision="emulate"/>
+  <project name="blackberry/Skia"/>
+  <project name="blackberry/SpiderMonkey"/>
+  <project name="blackberry/Thrift"/>
+  <project name="blackberry/TouchControlOverlay"/>
+  <project name="blackberry/v8" revision="v8-3.8.9-qnx"/>
+  <project name="blackberry/VSPlugin" revision="next"/>
+  <project name="blackberry/WebGL-Samples"/>
+  <project name="blackberry/WebKit-BB10" revision="BB10_0_09"/>
+  <project name="blackberry/WebKit-PlayBook" revision="playbook-2.1.0"/>
+  <project name="blackberry/WebKit-Smartphone"/>
+  <project name="blackberry/WebWorks"/>
+  <project name="blackberry/WebWorks-API-Docs"/>
+  <project name="blackberry/WebWorks-Community-APIs"/>
+  <project name="blackberry/WebWorks-Community-Samples"/>
+  <project name="blackberry/WebWorks-Samples"/>
+  <project name="blackberry/WebWorks-TabletOS"/>
+  <project name="blackberry/Wesnoth"/>
+  <project name="blackberry/zxing"/>
+</manifest>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="TIOP/beagleboot"/>
+  <project name="TIOP/buildroot"/>
+  <project name="TIOP/buildroot-beaglebone"/>
+  <project name="TIOP/gertboard_sw"/>
+  <project name="TIOP/kernel"/>
+  <project name="TIOP/qt4-demos"/>
+  <project name="TIOP/rowboat-build"/>
+  <project name="TIOP/rowboat-hardware-ril"/>
+  <project name="TIOP/rowboat-kernel"/>
+  <project name="TIOP/rowboat-manifest"/>
+  <project name="TIOP/rowboat-packages-apps-launcher2"/>
+  <project name="TIOP/rowboat-system-core"/>
+  <project name="TIOP/rowboat-vendor-embest"/>
+</manifest>

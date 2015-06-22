@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="googleglass/apk-compass-sample"/>
+  <project name="googleglass/apk-level-sample"/>
+  <project name="googleglass/apk-stopwatch-sample"/>
+  <project name="googleglass/apk-waveform-sample"/>
+  <project name="googleglass/mirror-counter-sample-python"/>
+  <project name="googleglass/mirror-quickstart-dotnet"/>
+  <project name="googleglass/mirror-quickstart-go"/>
+  <project name="googleglass/mirror-quickstart-java"/>
+  <project name="googleglass/mirror-quickstart-php"/>
+  <project name="googleglass/mirror-quickstart-python"/>
+  <project name="googleglass/mirror-quickstart-ruby"/>
+</manifest>

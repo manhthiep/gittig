@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="openframeworks/ofSite"/>
+  <project name="openframeworks/ofxAddonTemplate"/>
+  <project name="openframeworks/openFrameworks"/>
+</manifest>

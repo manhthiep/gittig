@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="energia/Adafruit_CC3000_Library"/>
+  <project name="energia/Energia"/>
+  <project name="energia/energia_tools"/>
+</manifest>

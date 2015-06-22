@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="Freescale/Documentation"/>
+  <project name="Freescale/Freescale.github.io"/>
+  <project name="Freescale/fsl-community-bsp-base"/>
+  <project name="Freescale/fsl-community-bsp-platform" revision="dylan"/>
+  <project name="Freescale/linux-mainline" revision="patches-3.11"/>
+  <project name="Freescale/linux-module-virtfb"/>
+  <project name="Freescale/meta-fsl-arm"/>
+  <project name="Freescale/meta-fsl-arm-extra"/>
+  <project name="Freescale/meta-fsl-demos"/>
+  <project name="Freescale/meta-fsl-ivi"/>
+  <project name="Freescale/u-boot-imx" revision="patches-2013.07"/>
+</manifest>

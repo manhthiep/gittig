@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="Aluxian/aluxian.com"/>
+  <project name="Aluxian/Assignment-Problem-Weighted-Bipartite-Matching"/>
+  <project name="Aluxian/blog.aluxian.com"/>
+  <project name="Aluxian/BrainfuckInterpreter-Kotlin"/>
+  <project name="Aluxian/CHS-Cattics"/>
+  <project name="Aluxian/CHS-Gradebook"/>
+  <project name="Aluxian/CloudSpokes-Chrome-Extension"/>
+  <project name="Aluxian/CNRV-RO-Website"/>
+  <project name="Aluxian/CPP-ML-LinearRegression"/>
+  <project name="Aluxian/DroidHub"/>
+  <project name="Aluxian/Facebook-Messenger-Desktop"/>
+  <project name="Aluxian/FII-Lorem-SQL"/>
+  <project name="Aluxian/FII-Lorem-UI"/>
+  <project name="Aluxian/FlightManager-WinForms"/>
+  <project name="Aluxian/FP-Growth-Java"/>
+  <project name="Aluxian/ghost-s3"/>
+  <project name="Aluxian/gulp-appdmg"/>
+  <project name="Aluxian/gulp-github-release"/>
+  <project name="Aluxian/gulp-node-webkit-builder"/>
+  <project name="Aluxian/homework-cpp"/>
+  <project name="Aluxian/iOS-Custom-AlertView-Swift"/>
+  <project name="Aluxian/ITM-Chat"/>
+  <project name="Aluxian/ITM-DreamBanking"/>
+  <project name="Aluxian/Market-Basket-Recommendation-FP-Growth"/>
+  <project name="Aluxian/Muzei-Facebook"/>
+  <project name="Aluxian/Narinder-Pong"/>
+  <project name="Aluxian/node-osx-notification"/>
+  <project name="Aluxian/PeerWorkout-LandingPage"/>
+  <project name="Aluxian/SRM-Timer"/>
+  <project name="Aluxian/WhatsApp-Desktop"/>
+</manifest>

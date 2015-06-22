@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="OpenELEC/dvb-firmware"/>
+  <project name="OpenELEC/firmware"/>
+  <project name="OpenELEC/libnfs"/>
+  <project name="OpenELEC/linux"/>
+  <project name="OpenELEC/misc-firmware"/>
+  <project name="OpenELEC/OpenELEC.tv"/>
+  <project name="OpenELEC/rpi-cecd"/>
+  <project name="OpenELEC/service.openelec.settings"/>
+  <project name="OpenELEC/unofficial-addons"/>
+  <project name="OpenELEC/wlan-firmware"/>
+  <project name="OpenELEC/xbmc"/>
+</manifest>

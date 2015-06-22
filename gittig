@@ -3,8 +3,9 @@
 #
 # gittig - v1.3
 #
-# Use cases:
+# Usage:
 # =====================
+#
 # 1. Clone
 # ------------
 # 1.1. Clone working dirs/mirrors from manifest file:
@@ -488,7 +489,7 @@ class GittigConfig(object):
                 # Declare new remote
                 remote_url = line[1:-1]
                 if not remote_url.startswith(CONFIG_KEYWORD):
-                    assert "://" in remote_url, "URL schema is required in " + line
+                    #assert "://" in remote_url, "URL schema is required in " + line
                     # Default remote name = 'from_config'
                     git_remote = GittigRemote("from_config", remote_url, in_config=True)       
                     self.remotes.append(git_remote)
@@ -544,11 +545,14 @@ class GittigConfig(object):
 
     def add_remote(self, remote):
         for r in self.remotes:
-            if r.fetch == remote.fetch or r.name == remote.name:
+            #if r.fetch == remote.fetch or r.name == remote.name:
+            if r.fetch in remote.fetch or r.fetch == remote.fetch or r.name == remote.name:
                 log.debug("Remote '%s' (%s) already defined. Skip.", remote.fetch, remote.name)
                 # Update the name if remote (which read from config) has same fetch URL
                 if r.name == "from_config":
+                    r.fetch = remote.fetch
                     r.name = remote.name
+                    return 0
                 return -1
         log.debug("Adding remote '%s'(%s)", remote.fetch, remote.name)
         self.remotes.append(remote)
@@ -971,6 +975,7 @@ def main():
     
     if options.jobs > 0:
         log.debug("options.jobs=%d", options.jobs)
+        log.info("Parallel with jobs=%d", options.jobs)
         pool = multiprocessing.Pool(processes=options.jobs, initializer=init_worker)
         parallel_mode = True
 

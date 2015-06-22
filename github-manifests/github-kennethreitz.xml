@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="kennethreitz/airstream"/>
+  <project name="kennethreitz/anaconda-buildpack"/>
+  <project name="kennethreitz/args"/>
+  <project name="kennethreitz/atom"/>
+  <project name="kennethreitz/autoenv"/>
+  <project name="kennethreitz/blackbox"/>
+  <project name="kennethreitz/bpwatch"/>
+  <project name="kennethreitz/buildpack-null"/>
+  <project name="kennethreitz/certifi"/>
+  <project name="kennethreitz/changelogdash"/>
+  <project name="kennethreitz/chaos-slugs"/>
+  <project name="kennethreitz/clint"/>
+  <project name="kennethreitz/convore.json"/>
+  <project name="kennethreitz/crate.web"/>
+  <project name="kennethreitz/curated-nodes"/>
+  <project name="kennethreitz/dirsnap"/>
+  <project name="kennethreitz/dj-database-url"/>
+  <project name="kennethreitz/dj-static"/>
+  <project name="kennethreitz/django-postgrespool"/>
+  <project name="kennethreitz/dynamo"/>
+  <project name="kennethreitz/elephant"/>
+  <project name="kennethreitz/env"/>
+  <project name="kennethreitz/envoy"/>
+  <project name="kennethreitz/envy"/>
+  <project name="kennethreitz/envy-versions"/>
+  <project name="kennethreitz/flask-googlefed"/>
+  <project name="kennethreitz/flask-heroku"/>
+  <project name="kennethreitz/flask-sslify"/>
+  <project name="kennethreitz/foauth.org"/>
+  <project name="kennethreitz/genome"/>
+  <project name="kennethreitz/ghsync"/>
+  <project name="kennethreitz/gistapi.py" revision="develop"/>
+  <project name="kennethreitz/git-legit.org"/>
+  <project name="kennethreitz/github-reflog" revision="en"/>
+  <project name="kennethreitz/goldenarch"/>
+  <project name="kennethreitz/grequests"/>
+  <project name="kennethreitz/gunicorn"/>
+  <project name="kennethreitz/gunicorn-meat"/>
+  <project name="kennethreitz/heroku-buildpack-go"/>
+  <project name="kennethreitz/heroku-elasticsearch"/>
+  <project name="kennethreitz/httpbin"/>
+  <project name="kennethreitz/httpbin2"/>
+  <project name="kennethreitz/humble" revision="develop"/>
+  <project name="kennethreitz/inbox.py"/>
+  <project name="kennethreitz/its.py"/>
+  <project name="kennethreitz/kcode.tmbundle"/>
+  <project name="kennethreitz/kr-site-buildpack"/>
+  <project name="kennethreitz/kr-sphinx-themes"/>
+  <project name="kennethreitz/krTheme.tmTheme"/>
+  <project name="kennethreitz/legit" revision="develop"/>
+  <project name="kennethreitz/lplex"/>
+  <project name="kennethreitz/omnijson" revision="develop"/>
+  <project name="kennethreitz/osx-gcc-installer"/>
+  <project name="kennethreitz/packages"/>
+  <project name="kennethreitz/pyandoc"/>
+  <project name="kennethreitz/python-for-humans"/>
+  <project name="kennethreitz/python-guide"/>
+  <project name="kennethreitz/python-logplex"/>
+  <project name="kennethreitz/python-versions"/>
+  <project name="kennethreitz/pythonforhumans.org"/>
+  <project name="kennethreitz/redmine-gitcamp-theme"/>
+  <project name="kennethreitz/replace"/>
+  <project name="kennethreitz/requests"/>
+  <project name="kennethreitz/requests-foauth"/>
+  <project name="kennethreitz/resources"/>
+  <project name="kennethreitz/samplemod"/>
+  <project name="kennethreitz/setup-py-cheatsheet"/>
+  <project name="kennethreitz/showme"/>
+  <project name="kennethreitz/spark.py"/>
+  <project name="kennethreitz/sphinx-buildpack"/>
+  <project name="kennethreitz/stathat.py"/>
+  <project name="kennethreitz/tablib" revision="develop"/>
+  <project name="kennethreitz/textui"/>
+  <project name="kennethreitz/travis-light"/>
+  <project name="kennethreitz/winchestar-v2"/>
+  <project name="kennethreitz/www.gittip.com"/>
+  <project name="kennethreitz/xerox"/>
+</manifest>

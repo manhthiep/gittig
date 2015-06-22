@@ -1,82 +1,16 @@
 [CONFIG]
 $jobs = 1
 
-[git://github.com/Evervolv]
+[android.googlesource.com]
 $active = true
-android_device_samsung_crespo4g = skip
-android_device_samsung_maguro = skip
-android_device_samsung_torospr = skip
-android_device_samsung_toro = skip
-android_device_samsung_tuna = skip
-android_device_ti_panda = skip
-android_device_samsung_c1-common = skip
-android_device_samsung_epic4gtouch = skip
-android_device_samsung_skyrocket = skip
-android_device_lge_thundercls670 = skip
-android_vendor_lge = skip
-android_vendor_hp = skip
-android_vendor_samsung = skip
+device/asus/flo-kernel=skip
+device/asus/fugu-kernel=skip
+device/htc/flounder-kernel=skip
+device/lge/hammerhead-kernel=skip
+device/moto/shamu-kernel=skip
 
-[git://github.com/manhthiep]
+[android.git.linaro.org]
 $active = true
-
-[git://github.com/CyanogenMod]
-$active = true
-
-[git://github.com/openwebos]
-$active = true
-
-[git://github.com/mozilla]
-$active = true
-
-[git://github.com/mozilla-b2g]
-$active = true
-
-[https://android.googlesource.com]
-$active = true
-$gerrit = android-review.googlesource.com
-device/asus/grouper = skip
-device/google/accessory/adk2012 = skip
-device/google/accessory/adk2012_demo = skip
-device/google/accessory/arduino = skip
-device/google/accessory/demokit = skip
-device/moto/common = skip
-device/moto/stingray = skip
-device/moto/wingray = skip
-device/samsung/crespo = skip
-device/samsung/crespo4g = skip
-device/samsung/maguro = skip
-device/samsung/toro = skip
-device/samsung/torospr = skip
-device/samsung/tuna = skip
-device/ti/bootloader/uboot = skip
-device/ti/panda = skip
-kernel/common = skip
-kernel/msm = skip
-kernel/exynos = skip
-kernel/omap = skip
-kernel/samsung = skip
-kernel/tegra = skip
-platform/cts = skip
-platform/docs/source.android.com = skip
-platform/prebuilts/gcc/darwin-x86/arm/arm-eabi-4.6 = skip
-platform/prebuilts/gcc/darwin-x86/arm/arm-linux-androideabi-4.6 = skip
-platform/prebuilts/gcc/darwin-x86/mips/mipsel-linux-android-4.4.3 = skip
-platform/prebuilts/gcc/darwin-x86/mips/mipsel-linux-android-4.6 = skip
-platform/prebuilts/gcc/darwin-x86/x86/i686-android-linux-4.4.3 = skip
-platform/prebuilts/gcc/darwin-x86/x86/i686-android-linux-4.6 = skip
-platform/prebuilts/gcc/darwin-x86/x86/i686-linux-android-4.6 = skip
-platform/prebuilts/gcc/linux-x86/mips/mipsel-linux-android-4.4.3 = skip
-platform/prebuilts/gcc/linux-x86/mips/mipsel-linux-android-4.6 = skip
-
-[https://git.chromium.org/git]
-$active = true
-chromiumos/third_party/kernel = skip
-chromiumos/third_party/kernel-next = skip
-
-[git://android.git.linaro.org]
-$active = true
-$gerrit = review.android.git.linaro.org
 platform/cts = skip
 device/asus/grouper = skip
 device/google/accessory/arduino = skip
@@ -104,7 +38,7 @@ platform/prebuilts/gcc/darwin-x86/x86/i686-linux-android-4.6 = skip
 platform/prebuilts/gcc/linux-x86/mips/mipsel-linux-android-4.4.3 = skip
 platform/prebuilts/gcc/linux-x86/mips/mipsel-linux-android-4.6 = skip
 
-[git://codeaurora.org]
+[codeaurora.org]
 $active = true
 device/generic/goldfish = skip
 device/google/accessory/arduino = skip

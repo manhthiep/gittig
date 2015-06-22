@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="github/AFNetworking" revision="octokit-pin"/>
+  <project name="github/aptly"/>
+  <project name="github/Archimedes"/>
+  <project name="github/aws-s3"/>
+  <project name="github/azure-quickstart-templates"/>
+  <project name="github/backstop"/>
+  <project name="github/backup-utils"/>
+  <project name="github/banana_phone"/>
+  <project name="github/brakeman" revision="github"/>
+  <project name="github/brubeck"/>
+  <project name="github/cas-overlay"/>
+  <project name="github/choosealicense.com" revision="gh-pages"/>
+  <project name="github/circuitbreaker"/>
+  <project name="github/dat-analysis"/>
+  <project name="github/developer.github.com"/>
+  <project name="github/dmca"/>
+  <project name="github/elastomer-client"/>
+  <project name="github/email_reply_parser"/>
+  <project name="github/ernicorn"/>
+  <project name="github/evenflow"/>
+  <project name="github/expecta"/>
+  <project name="github/facter"/>
+  <project name="github/fake_braintree"/>
+  <project name="github/fetch"/>
+  <project name="github/fog"/>
+  <project name="github/foreman"/>
+  <project name="github/game-o"/>
+  <project name="github/game-off-2012"/>
+  <project name="github/game-off-2013"/>
+  <project name="github/garethr-docker"/>
+  <project name="github/gemoji"/>
+  <project name="github/generator-hubot"/>
+  <project name="github/ghfw-build-extra"/>
+  <project name="github/GHKeyBrowser"/>
+  <project name="github/git-lfs"/>
+  <project name="github/git-msysgit"/>
+  <project name="github/github-ldap"/>
+  <project name="github/github-services"/>
+  <project name="github/gitignore"/>
+  <project name="github/GitPad"/>
+  <project name="github/go-opstocat"/>
+  <project name="github/gollum" revision="github"/>
+  <project name="github/government.github.com" revision="gh-pages"/>
+  <project name="github/grit"/>
+  <project name="github/grocer"/>
+  <project name="github/gsoc"/>
+  <project name="github/hoosegow"/>
+  <project name="github/hr-opensource"/>
+  <project name="github/html-pipeline"/>
+  <project name="github/hub"/>
+  <project name="github/hubot"/>
+  <project name="github/hubot-scripts"/>
+  <project name="github/include-fragment-element"/>
+  <project name="github/janky"/>
+  <project name="github/ledbetter"/>
+  <project name="github/lfs-test-server"/>
+  <project name="github/libgit2sharp" revision="vNext"/>
+  <project name="github/linguist"/>
+  <project name="github/litterbox"/>
+  <project name="github/markup"/>
+  <project name="github/MASPreferences"/>
+  <project name="github/maven-plugins"/>
+  <project name="github/mime-types"/>
+  <project name="github/msysgit" revision="devel"/>
+  <project name="github/nagios-plugins-github"/>
+  <project name="github/nagioseasier-module"/>
+  <project name="github/Nimble"/>
+  <project name="github/node-statsd"/>
+  <project name="github/nugget"/>
+  <project name="github/objective-c-style-guide"/>
+  <project name="github/octicons"/>
+  <project name="github/OHHTTPStubs"/>
+  <project name="github/omniauth" revision="0-3-stable"/>
+  <project name="github/pages-gem"/>
+  <project name="github/pages-health-check"/>
+  <project name="github/pjax"/>
+  <project name="github/platform-samples"/>
+  <project name="github/pong"/>
+  <project name="github/posix-spawn"/>
+  <project name="github/puppet-aptmirror"/>
+  <project name="github/puppet-module-group"/>
+  <project name="github/puppet-sysfs"/>
+  <project name="github/puppetlabs-puppet" revision="2.7.x-github"/>
+  <project name="github/puppetlabs-puppetdb" revision="1.1.x-github"/>
+  <project name="github/Quick"/>
+  <project name="github/rack"/>
+  <project name="github/rails" revision="3-2-github"/>
+  <project name="github/railsless-deploy"/>
+  <project name="github/Rebel"/>
+  <project name="github/redcloth"/>
+  <project name="github/resque" revision="github"/>
+  <project name="github/roskomnadzor"/>
+  <project name="github/ruby" revision="2.1"/>
+  <project name="github/rubycas-server"/>
+  <project name="github/scientist"/>
+  <project name="github/serialized_attributes"/>
+  <project name="github/SharpDevelop"/>
+  <project name="github/specta"/>
+  <project name="github/sprockets"/>
+  <project name="github/sprockets-rails" revision="3.x-github"/>
+  <project name="github/statsd-ruby"/>
+  <project name="github/STUtils"/>
+  <project name="github/swift-style-guide"/>
+  <project name="github/tainted_hash"/>
+  <project name="github/task_list"/>
+  <project name="github/testrepo"/>
+  <project name="github/time-elements"/>
+  <project name="github/training-kit"/>
+  <project name="github/twui" revision="a-safe-place"/>
+  <project name="github/uiimage-from-animated-gif"/>
+  <project name="github/veewee"/>
+  <project name="github/version_sorter"/>
+  <project name="github/winbootstrap"/>
+</manifest>

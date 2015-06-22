@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="OpenROV/openrov-contrib"/>
+  <project name="OpenROV/openrov-electronics"/>
+  <project name="OpenROV/openrov-hardware"/>
+  <project name="OpenROV/openrov-image"/>
+  <project name="OpenROV/openrov-software"/>
+  <project name="OpenROV/openrov-wiki"/>
+</manifest>

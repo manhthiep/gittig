@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="seveas/Acme--CPANAuthors--Booking"/>
+  <project name="seveas/atftp"/>
+  <project name="seveas/bind.vim"/>
+  <project name="seveas/buienradar"/>
+  <project name="seveas/chanserv.py"/>
+  <project name="seveas/codesearch"/>
+  <project name="seveas/CPAN-Unpack"/>
+  <project name="seveas/cpanspec"/>
+  <project name="seveas/Diamond"/>
+  <project name="seveas/django-cli-query"/>
+  <project name="seveas/django-echelon"/>
+  <project name="seveas/django-sqlfixtables"/>
+  <project name="seveas/django-sqlviews"/>
+  <project name="seveas/dnsgraph"/>
+  <project name="seveas/func-paragrep"/>
+  <project name="seveas/func-shell"/>
+  <project name="seveas/git"/>
+  <project name="seveas/git-hub"/>
+  <project name="seveas/Gitalist"/>
+  <project name="seveas/github3.py"/>
+  <project name="seveas/go.rpm"/>
+  <project name="seveas/goblet"/>
+  <project name="seveas/graphite-urlshortener"/>
+  <project name="seveas/graphite-web"/>
+  <project name="seveas/hacks"/>
+  <project name="seveas/ip_info"/>
+  <project name="seveas/Linux-Prctl"/>
+  <project name="seveas/MysqlPerfCollector"/>
+  <project name="seveas/Net-SMS-WorldText"/>
+  <project name="seveas/nss-ubdns"/>
+  <project name="seveas/parse-cpan-packages-fast"/>
+  <project name="seveas/python-hpilo"/>
+  <project name="seveas/python-networkmanager"/>
+  <project name="seveas/python-prctl"/>
+  <project name="seveas/python-snmpclient"/>
+  <project name="seveas/python-zonediff"/>
+  <project name="seveas/Sereal"/>
+  <project name="seveas/seveas.github.com"/>
+  <project name="seveas/SOAP-UMRA"/>
+  <project name="seveas/sslhazard"/>
+  <project name="seveas/Term-Multiplexed"/>
+  <project name="seveas/ubot"/>
+  <project name="seveas/whelk"/>
+  <project name="seveas/whisper"/>
+</manifest>

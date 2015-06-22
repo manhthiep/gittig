@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="mbostock/bl.ocks.org"/>
+  <project name="mbostock/bost.ocks.org" revision="gh-pages"/>
+  <project name="mbostock/csv2geojson" revision="gh-pages"/>
+  <project name="mbostock/cube-logplex"/>
+  <project name="mbostock/d3"/>
+  <project name="mbostock/dependency-tree"/>
+  <project name="mbostock/dsv"/>
+  <project name="mbostock/geojsonwg.github.io"/>
+  <project name="mbostock/git-static"/>
+  <project name="mbostock/hide-flickr-eyebrow"/>
+  <project name="mbostock/hide-google-plus-notification"/>
+  <project name="mbostock/jsbin"/>
+  <project name="mbostock/jsdom"/>
+  <project name="mbostock/mbostock.github.com"/>
+  <project name="mbostock/mongo-mock"/>
+  <project name="mbostock/nns"/>
+  <project name="mbostock/node-envy"/>
+  <project name="mbostock/node-mappy"/>
+  <project name="mbostock/node-mongodb-native"/>
+  <project name="mbostock/nodeunit"/>
+  <project name="mbostock/ocks.org" revision="gh-pages"/>
+  <project name="mbostock/pixymaps"/>
+  <project name="mbostock/polly-b-gone"/>
+  <project name="mbostock/polymaps"/>
+  <project name="mbostock/protovis"/>
+  <project name="mbostock/queue"/>
+  <project name="mbostock/shapefile"/>
+  <project name="mbostock/smash"/>
+  <project name="mbostock/stack" revision="gh-pages"/>
+  <project name="mbostock/topojson"/>
+  <project name="mbostock/UglifyJS2"/>
+  <project name="mbostock/us-atlas"/>
+  <project name="mbostock/us-rivers"/>
+  <project name="mbostock/vows"/>
+  <project name="mbostock/world-atlas"/>
+</manifest>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="OLIMEX/archlinuxarm-olinuxino"/>
+  <project name="OLIMEX/DUINO"/>
+  <project name="OLIMEX/DuinoMite"/>
+  <project name="OLIMEX/OLINUXINO"/>
+  <project name="OLIMEX/olinuxino-web-io"/>
+  <project name="OLIMEX/raspberrypi"/>
+  <project name="OLIMEX/STM32F4"/>
+  <project name="OLIMEX/WPC"/>
+</manifest>

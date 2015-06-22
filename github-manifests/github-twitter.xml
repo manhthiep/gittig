@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="twitter/activerecord-reputation-system"/>
+  <project name="twitter/algebird" revision="develop"/>
+  <project name="twitter/ambrose"/>
+  <project name="twitter/AnomalyDetection"/>
+  <project name="twitter/bijection" revision="develop"/>
+  <project name="twitter/bookkeeper"/>
+  <project name="twitter/BreakoutDetection"/>
+  <project name="twitter/cascading" revision="2.1"/>
+  <project name="twitter/cassie"/>
+  <project name="twitter/cassovary"/>
+  <project name="twitter/cdk"/>
+  <project name="twitter/chill" revision="develop"/>
+  <project name="twitter/cli-guide.js"/>
+  <project name="twitter/clockworkraven"/>
+  <project name="twitter/cloudhopper-commons"/>
+  <project name="twitter/cloudhopper-smpp"/>
+  <project name="twitter/CocoaSPDY"/>
+  <project name="twitter/code-of-conduct"/>
+  <project name="twitter/commons"/>
+  <project name="twitter/css-flip"/>
+  <project name="twitter/d3kit"/>
+  <project name="twitter/digits-android"/>
+  <project name="twitter/effectivescala"/>
+  <project name="twitter/elephant-bird"/>
+  <project name="twitter/elephant-twin"/>
+  <project name="twitter/elephant-twin-lzo"/>
+  <project name="twitter/fatcache"/>
+  <project name="twitter/finagle"/>
+  <project name="twitter/finatra"/>
+  <project name="twitter/finatra-activator-seed"/>
+  <project name="twitter/finatra-examples"/>
+  <project name="twitter/flockdb"/>
+  <project name="twitter/flockdb-client"/>
+  <project name="twitter/git"/>
+  <project name="twitter/gizzard"/>
+  <project name="twitter/gizzmo"/>
+  <project name="twitter/gozer"/>
+  <project name="twitter/grabby-hands"/>
+  <project name="twitter/hadoop-lzo"/>
+  <project name="twitter/haplocheirus"/>
+  <project name="twitter/hbc"/>
+  <project name="twitter/hdfs-du"/>
+  <project name="twitter/hogan.js"/>
+  <project name="twitter/hpack"/>
+  <project name="twitter/hraven"/>
+  <project name="twitter/iago"/>
+  <project name="twitter/innovators-patent-agreement"/>
+  <project name="twitter/interactive" revision="gh-pages"/>
+  <project name="twitter/jaqen"/>
+  <project name="twitter/joauth"/>
+  <project name="twitter/jsr166e"/>
+  <project name="twitter/jvmgcprof"/>
+  <project name="twitter/kestrel"/>
+  <project name="twitter/kestrel-client"/>
+  <project name="twitter/libcrunch"/>
+  <project name="twitter/libkestrel"/>
+  <project name="twitter/libwatchman"/>
+  <project name="twitter/mahout"/>
+  <project name="twitter/mysos"/>
+  <project name="twitter/mysql"/>
+  <project name="twitter/naggati2"/>
+  <project name="twitter/netty-http2"/>
+  <project name="twitter/oscon-puzzles"/>
+  <project name="twitter/ospriet"/>
+  <project name="twitter/ostrich"/>
+  <project name="twitter/pants"/>
+  <project name="twitter/PerfTracepoint"/>
+  <project name="twitter/pig" revision="trunk"/>
+  <project name="twitter/plumage.js"/>
+  <project name="twitter/pycascading"/>
+  <project name="twitter/querulous"/>
+  <project name="twitter/raggiana"/>
+  <project name="twitter/recess"/>
+  <project name="twitter/Rowz"/>
+  <project name="twitter/RTLtextarea"/>
+  <project name="twitter/sbt-package-dist"/>
+  <project name="twitter/sbt-scrooge"/>
+  <project name="twitter/sbt-thrift"/>
+  <project name="twitter/scala" revision="2.12.x"/>
+  <project name="twitter/scala-bootstrapper"/>
+  <project name="twitter/scala-json"/>
+  <project name="twitter/scalacheck"/>
+  <project name="twitter/scala_school"/>
+  <project name="twitter/scala_school2"/>
+  <project name="twitter/scalding" revision="develop"/>
+  <project name="twitter/scribe"/>
+  <project name="twitter/scrooge"/>
+  <project name="twitter/secureheaders"/>
+  <project name="twitter/snowflake"/>
+  <project name="twitter/spark"/>
+  <project name="twitter/spitball"/>
+  <project name="twitter/sprockets-commonjs-twitter"/>
+  <project name="twitter/sslconfig"/>
+  <project name="twitter/standard-project"/>
+  <project name="twitter/storehaus" revision="develop"/>
+  <project name="twitter/streamyj"/>
+  <project name="twitter/summingbird" revision="develop"/>
+  <project name="twitter/thrift_client"/>
+  <project name="twitter/time_constants"/>
+  <project name="twitter/tormenta" revision="develop"/>
+  <project name="twitter/twemcache"/>
+  <project name="twitter/twemoji" revision="gh-pages"/>
+  <project name="twitter/twemperf"/>
+  <project name="twitter/twemproxy"/>
+  <project name="twitter/twisitor"/>
+  <project name="twitter/twitcher"/>
+  <project name="twitter/twitter-cldr-js"/>
+  <project name="twitter/twitter-cldr-npm"/>
+  <project name="twitter/twitter-cldr-rb"/>
+  <project name="twitter/twitter-kit-android"/>
+  <project name="twitter/twitter-korean-text"/>
+  <project name="twitter/twitter-server"/>
+  <project name="twitter/twitter-text"/>
+  <project name="twitter/twitter-text-conformance"/>
+  <project name="twitter/twitter-text-java"/>
+  <project name="twitter/twitter-text-js"/>
+  <project name="twitter/twitter-text-objc"/>
+  <project name="twitter/twitter-text-rb"/>
+  <project name="twitter/twitter.github.com"/>
+  <project name="twitter/twitter4j"/>
+  <project name="twitter/twitterActors"/>
+  <project name="twitter/twui"/>
+  <project name="twitter/twurl"/>
+  <project name="twitter/typeahead.js"/>
+  <project name="twitter/unishark"/>
+  <project name="twitter/util"/>
+  <project name="twitter/webrat"/>
+  <project name="twitter/whiskey"/>
+  <project name="twitter/wordpress"/>
+  <project name="twitter/zipkin"/>
+  <project name="twitter/zktraffic"/>
+</manifest>

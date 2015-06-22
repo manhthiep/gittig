@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="aws/aws-cli" revision="develop"/>
+  <project name="aws/aws-dynamodb-session-tomcat"/>
+  <project name="aws/aws-flow-ruby"/>
+  <project name="aws/aws-sdk-android"/>
+  <project name="aws/aws-sdk-ios"/>
+  <project name="aws/aws-sdk-java"/>
+  <project name="aws/aws-sdk-js"/>
+  <project name="aws/aws-sdk-net"/>
+  <project name="aws/aws-sdk-php"/>
+  <project name="aws/aws-sdk-php-laravel"/>
+  <project name="aws/aws-sdk-php-silex"/>
+  <project name="aws/aws-sdk-php-zf2"/>
+  <project name="aws/aws-sdk-ruby"/>
+  <project name="aws/aws-sessionstore-dynamodb-ruby"/>
+  <project name="aws/aws-toolkit-eclipse"/>
+  <project name="aws/java-meme-generator-sample"/>
+  <project name="aws/opsworks-cookbooks" revision="master-chef-11.4"/>
+</manifest>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="GoogleChrome/accessibility-developer-tools"/>
+  <project name="GoogleChrome/accessibility-developer-tools-extension"/>
+  <project name="GoogleChrome/ADBPlugin"/>
+  <project name="GoogleChrome/apps-resource-loader"/>
+  <project name="GoogleChrome/audio-room-demo"/>
+  <project name="GoogleChrome/browserify-chrome"/>
+  <project name="GoogleChrome/chrome-app-codelab"/>
+  <project name="GoogleChrome/chrome-app-samples"/>
+  <project name="GoogleChrome/chrome-gamepad-probe"/>
+  <project name="GoogleChrome/chrome-platform-analytics"/>
+  <project name="GoogleChrome/chromebook-demo-app"/>
+  <project name="GoogleChrome/ChromeWebLab"/>
+  <project name="GoogleChrome/chromium-dashboard"/>
+  <project name="GoogleChrome/code-editor-app"/>
+  <project name="GoogleChrome/css-filters-demo"/>
+  <project name="GoogleChrome/CWSLauncher-extension"/>
+  <project name="GoogleChrome/devtools-docs"/>
+  <project name="GoogleChrome/dialog-polyfill"/>
+  <project name="GoogleChrome/kendo-photo-booth-app"/>
+  <project name="GoogleChrome/net-chromeify"/>
+  <project name="GoogleChrome/news-reader-app"/>
+  <project name="GoogleChrome/numberhtml5-app"/>
+  <project name="GoogleChrome/OpenInChrome"/>
+  <project name="GoogleChrome/sencha-video-player-app"/>
+  <project name="GoogleChrome/text-app"/>
+  <project name="GoogleChrome/vocoder-demo"/>
+  <project name="GoogleChrome/web-components-samples"/>
+  <project name="GoogleChrome/webaudio-playground-demo"/>
+  <project name="GoogleChrome/webplatform-metrics" revision="gh-pages"/>
+  <project name="GoogleChrome/webplatform-samples"/>
+  <project name="GoogleChrome/wReader-app"/>
+</manifest>

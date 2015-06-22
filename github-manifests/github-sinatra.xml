@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="sinatra/heroku-sinatra-app"/>
+  <project name="sinatra/resources"/>
+  <project name="sinatra/sinatra"/>
+  <project name="sinatra/sinatra-book"/>
+  <project name="sinatra/sinatra-contrib"/>
+  <project name="sinatra/sinatra-prawn"/>
+  <project name="sinatra/sinatra-recipes"/>
+  <project name="sinatra/sinatra-template"/>
+  <project name="sinatra/sinatra.github.com"/>
+</manifest>

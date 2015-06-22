@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="jashkenas/api-playground"/>
+  <project name="jashkenas/backbone"/>
+  <project name="jashkenas/coffee-script"/>
+  <project name="jashkenas/coffee-script-tmbundle"/>
+  <project name="jashkenas/context_free"/>
+  <project name="jashkenas/docco"/>
+  <project name="jashkenas/journo"/>
+  <project name="jashkenas/know-thy-congressman"/>
+  <project name="jashkenas/learning-processing-with-ruby"/>
+  <project name="jashkenas/new-turing-omnibus"/>
+  <project name="jashkenas/quakespotter"/>
+  <project name="jashkenas/ruby-processing"/>
+  <project name="jashkenas/ruby-processing-plugin"/>
+  <project name="jashkenas/underscore"/>
+</manifest>

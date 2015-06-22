@@ -1,0 +1,172 @@
+#!/usr/bin/env python
+#
+# github-export - v1.0
+#
+import os
+import sys
+import time
+import optparse
+import logging
+import urlparse
+from xml.dom import minidom
+from xml.dom.minidom import Document
+import traceback
+import subprocess
+import re
+import urllib2
+import json
+import datetime
+
+# Github API Token 
+GITHUB_API_TOKEN = ""
+
+# Global variables
+options = None
+log = logging.getLogger(__file__)
+
+optparser = optparse.OptionParser(usage="""%prog <options> <args>...""")
+
+optparser.add_option("-D","--debug", action="store_true",
+             dest="debug",
+             help="Enable debug logging")
+
+# Github: export user's project list
+optparser.add_option("-U", "--username", metavar="SUBSTR", default="",
+             dest="username", 
+             help="Names of GitHub's users for exporting project list")
+optparser.add_option("-o","--output-manifest", metavar="NAME.xml", default="",
+             dest="output_manifest",
+             help="Output manifest for list of projects")
+  
+class GittigController(object):
+            
+    def github_get_repo_list(self, pagelinks, api_url, repos):
+        log.debug("Waiting response from GitHub (URL:'%s')...", api_url)
+        
+        request = urllib2.Request(api_url, headers={"Authorization": "token "+GITHUB_API_TOKEN})
+        
+        f = urllib2.urlopen(request)
+        header = f.info()
+        headerLinks = header.getheader('Link')
+        if headerLinks != None:
+            pl = re.split(',', headerLinks)
+            #log.info("Link='%s'", pl)
+            for l in pl:
+                sections = re.split(';', l)
+                url = re.sub(r' |<|>', '', sections[0])
+                name = re.sub(r' |rel=|"', '', sections[1])
+                pagelinks[name] = url
+            
+        response = f.read()
+        #log.info("Response: '%s'", response)
+        jsonResponse = json.loads(response)
+        
+        # project elements
+        for j in jsonResponse:
+            repo = {}
+            repo['name'] = j['full_name']
+            log.info("- %s", repo['name'])
+            if 'description' in j:
+                repo['description'] = j['description']
+            if 'default_branch' in j:
+                repo['default_branch'] = j['default_branch']
+            if 'master_branch' in j:
+                repo['master_branch'] = j['master_branch']
+            repos.append(repo)
+        
+        if headerLinks != None:
+            if api_url != pagelinks['last']:
+                self.github_get_repo_list(pagelinks, pagelinks['next'], repos)
+
+    def github_export(self):
+
+        # username
+        if options.username == "":
+            log.error("Invalid username!")
+            sys.exit(-1)
+        log.info("Username: '%s'", options.username)
+        # output manifest
+        if options.output_manifest != "":
+            output_manifest = options.output_manifest
+        else:
+            today = datetime.datetime.today()
+            today_str = today.strftime("%Y%m%d-%H%M")
+            output_manifest = "github-" + options.username + "-" + today_str + ".xml"
+        log.info("Ouput manifest: '%s'", output_manifest)
+        
+        GITHUB_API_URL = "https://api.github.com/"
+        endpoint = "users/"+options.username+"/repos"
+        # type = all, owner, public, private, member (default: all)
+        # sort = created, updated, pushed, full_name (default: full_name)
+        # direction = asc, desc (default: when using full_name: asc, otherwise desc)
+        # params = "?type=all&sort=full_name&direction=asc"
+        params = ""
+        request = GITHUB_API_URL + endpoint + params
+        log.info("Request: 'GET %s'", request)
+        pagelinks = {}
+        repos = []
+        self.github_get_repo_list(pagelinks, request, repos)
+        
+        log.info("Getting projects done. Preparing data for exporting...")
+        doc = Document()
+        manifest_element = doc.createElement("manifest")
+        doc.appendChild(manifest_element)
+        
+        # github remote element
+        github_remote_element = doc.createElement("remote")
+        github_remote_element.setAttribute("name", "github")
+        github_remote_element.setAttribute("fetch", "git://github.com/")
+        manifest_element.appendChild(github_remote_element)
+        
+        # default element
+        default_element = doc.createElement("default")
+        default_element.setAttribute("remote", "github")
+        default_element.setAttribute("revision", "master")
+        default_element.setAttribute("sync-j", "4")
+        manifest_element.appendChild(default_element)
+
+        # project elements
+        for repo in repos:
+            p_element = doc.createElement("project")
+            p_element.setAttribute("name", repo['name'])
+            if 'default_branch' in repo:
+                if repo['default_branch'] != 'master':
+                    p_element.setAttribute("revision", repo['default_branch'])
+            #if repo['description'] != '':
+            #    p_element.setAttribute("description", repo['description'])
+            manifest_element.appendChild(p_element)
+            
+        #print doc.toprettyxml()
+        
+        log.info("Saving to manifest file '%s'...", os.path.abspath(output_manifest))
+        with open(os.path.abspath(output_manifest), 'wb') as xml_file:
+            doc.writexml(xml_file, indent="", addindent="  ", newl="\n", encoding='utf-8')
+            log.info("Saving done.")
+
+def main():
+    global options
+
+    options, args = optparser.parse_args(sys.argv[1:])
+    #if len(args) < 1:
+    #    optparser.error("Wrong number of arguments")
+
+    logging.basicConfig(format='%(levelname)s: %(message)s', \
+                        level=logging.DEBUG if options.debug else logging.INFO)
+
+    if GITHUB_API_TOKEN == "":
+        log.error("Invalid API token")
+        sys.exit(-1)
+
+    controller = GittigController()
+        
+    try:
+        controller.github_export()
+        log.info("Done.")
+    except KeyboardInterrupt:
+        log.error("Interrupted by keyboard...exiting")
+    except Exception:
+        traceback.print_exc(file=sys.stdout)    
+    sys.exit(0)
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="twilio/BankersBox"/>
+  <project name="twilio/calworkshop"/>
+  <project name="twilio/chessms"/>
+  <project name="twilio/flask-restful"/>
+  <project name="twilio/howtos"/>
+  <project name="twilio/hurl"/>
+  <project name="twilio/hurl2"/>
+  <project name="twilio/OpenVBX"/>
+  <project name="twilio/OpenVBX-iPhone"/>
+  <project name="twilio/pear" revision="gh-pages"/>
+  <project name="twilio/shadow" revision="scala"/>
+  <project name="twilio/starter-cloud9"/>
+  <project name="twilio/starter-dotnet"/>
+  <project name="twilio/starter-java"/>
+  <project name="twilio/starter-node"/>
+  <project name="twilio/starter-php"/>
+  <project name="twilio/starter-python"/>
+  <project name="twilio/starter-ruby"/>
+  <project name="twilio/stashboard"/>
+  <project name="twilio/twilio-csharp"/>
+  <project name="twilio/twilio-java"/>
+  <project name="twilio/twilio-node"/>
+  <project name="twilio/twilio-php"/>
+  <project name="twilio/twilio-python"/>
+  <project name="twilio/twilio-ruby"/>
+  <project name="twilio/twilio-salesforce"/>
+  <project name="twilio/workshop"/>
+  <project name="twilio/wp-click2call"/>
+</manifest>

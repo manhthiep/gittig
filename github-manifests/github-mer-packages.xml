@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="mer-packages/connman"/>
+  <project name="mer-packages/kcalcore"/>
+  <project name="mer-packages/libaccounts-qt"/>
+  <project name="mer-packages/libresourceqt"/>
+  <project name="mer-packages/libsignon"/>
+  <project name="mer-packages/libsignon-glib"/>
+  <project name="mer-packages/libyaml"/>
+  <project name="mer-packages/mcts-blts"/>
+  <project name="mer-packages/mer-gfx-tests"/>
+  <project name="mer-packages/mer-rpm-config"/>
+  <project name="mer-packages/minimer"/>
+  <project name="mer-packages/mkcal"/>
+  <project name="mer-packages/qt3d"/>
+  <project name="mer-packages/qtbase"/>
+  <project name="mer-packages/qtconnectivity"/>
+  <project name="mer-packages/qtdeclarative"/>
+  <project name="mer-packages/qtdocgallery"/>
+  <project name="mer-packages/qtfeedback"/>
+  <project name="mer-packages/qtgraphicaleffects"/>
+  <project name="mer-packages/qtimageformats"/>
+  <project name="mer-packages/qtjsbackend"/>
+  <project name="mer-packages/qtlocation"/>
+  <project name="mer-packages/qtmultimedia"/>
+  <project name="mer-packages/qtpim"/>
+  <project name="mer-packages/qtquick1"/>
+  <project name="mer-packages/qtscenegraph-adaptation"/>
+  <project name="mer-packages/qtscript"/>
+  <project name="mer-packages/qtsensors"/>
+  <project name="mer-packages/qtsvg"/>
+  <project name="mer-packages/qtsystems"/>
+  <project name="mer-packages/qttools"/>
+  <project name="mer-packages/qtwayland"/>
+  <project name="mer-packages/qtwebkit5"/>
+  <project name="mer-packages/qtxmlpatterns"/>
+  <project name="mer-packages/repomd-pattern-builder"/>
+  <project name="mer-packages/rpm"/>
+  <project name="mer-packages/ruby"/>
+  <project name="mer-packages/sb2-tools-qt5"/>
+  <project name="mer-packages/sensorfw"/>
+  <project name="mer-packages/upower"/>
+</manifest>

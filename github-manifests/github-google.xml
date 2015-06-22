@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="google/ansicolor-dart"/>
+  <project name="google/auto"/>
+  <project name="google/autoparse"/>
+  <project name="google/build-debian-cloud"/>
+  <project name="google/carfac"/>
+  <project name="google/ChannelPlate"/>
+  <project name="google/compile-testing"/>
+  <project name="google/concatenate.js"/>
+  <project name="google/cpp-netlib"/>
+  <project name="google/crx2app"/>
+  <project name="google/CSP-Validator"/>
+  <project name="google/cxx-std-draft"/>
+  <project name="google/dagger"/>
+  <project name="google/dart-collab"/>
+  <project name="google/dart-gif-encoder"/>
+  <project name="google/data-layer-helper"/>
+  <project name="google/developer.github.com"/>
+  <project name="google/devtoolsExtended" revision="atopwi"/>
+  <project name="google/embed-dart-vm"/>
+  <project name="google/filesystem-proposal"/>
+  <project name="google/firmata.py"/>
+  <project name="google/gitkit-ruby"/>
+  <project name="google/GL-Shader-Validator"/>
+  <project name="google/glyphy"/>
+  <project name="google/go-github"/>
+  <project name="google/google-api-cpp-client" revision="v0.1"/>
+  <project name="google/google-api-nodejs-client"/>
+  <project name="google/google-api-ruby-client"/>
+  <project name="google/google-api-ruby-client-samples"/>
+  <project name="google/google-apps-script-samples"/>
+  <project name="google/google.github.com"/>
+  <project name="google/googletv-android-samples"/>
+  <project name="google/gumbo-parser"/>
+  <project name="google/gwteventbinder"/>
+  <project name="google/gwtmockito"/>
+  <project name="google/ios-webkit-debug-proxy"/>
+  <project name="google/kratu"/>
+  <project name="google/latency-benchmark"/>
+  <project name="google/libcxx"/>
+  <project name="google/libtess.js"/>
+  <project name="google/lisp-koans"/>
+  <project name="google/module-server"/>
+  <project name="google/namebench"/>
+  <project name="google/paco" revision="develop"/>
+  <project name="google/perf_api.dart"/>
+  <project name="google/pinject"/>
+  <project name="google/prerender-test"/>
+  <project name="google/qpp"/>
+  <project name="google/quiver-dart"/>
+  <project name="google/ruby-openid-apps-discovery"/>
+  <project name="google/safevarargs"/>
+  <project name="google/signet"/>
+  <project name="google/sirius"/>
+  <project name="google/streamy-dart"/>
+  <project name="google/testRunner"/>
+  <project name="google/traceur-compiler"/>
+  <project name="google/tracing-framework"/>
+</manifest>

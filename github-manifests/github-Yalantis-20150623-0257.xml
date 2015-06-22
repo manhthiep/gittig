@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="Yalantis/CameraModule"/>
+  <project name="Yalantis/CloudKit-Demo.Objective-C"/>
+  <project name="Yalantis/CloudKit-Demo.Swift"/>
+  <project name="Yalantis/Context-Menu.Android"/>
+  <project name="Yalantis/Context-Menu.iOS"/>
+  <project name="Yalantis/CorePlotTutorial"/>
+  <project name="Yalantis/DataBenchmarkObjc"/>
+  <project name="Yalantis/DataBenchmarkSwift"/>
+  <project name="Yalantis/Euclid"/>
+  <project name="Yalantis/FastEasyMapping"/>
+  <project name="Yalantis/FlipViewPager.Draco"/>
+  <project name="Yalantis/FoldingTabBar.iOS"/>
+  <project name="Yalantis/gitflow" revision="develop"/>
+  <project name="Yalantis/GuillotineMenu"/>
+  <project name="Yalantis/GuillotineMenu-Android"/>
+  <project name="Yalantis/iOS-Guidelines"/>
+  <project name="Yalantis/MappingExample"/>
+  <project name="Yalantis/MMProgressHUD-Fork"/>
+  <project name="Yalantis/Persei"/>
+  <project name="Yalantis/Phoenix"/>
+  <project name="Yalantis/Preloader.Ophiuchus"/>
+  <project name="Yalantis/Pull-to-Refresh.Rentals-iOS"/>
+  <project name="Yalantis/PullToMakeFlight"/>
+  <project name="Yalantis/PullToMakeSoup"/>
+  <project name="Yalantis/PullToRefresh" revision="develop"/>
+  <project name="Yalantis/Side-Menu.Android"/>
+  <project name="Yalantis/Side-Menu.iOS"/>
+  <project name="Yalantis/Taurus"/>
+  <project name="Yalantis/testflight-plugin"/>
+  <project name="Yalantis/YalantisCocoaPodsSpecs"/>
+  <project name="Yalantis/YALConsole"/>
+</manifest>

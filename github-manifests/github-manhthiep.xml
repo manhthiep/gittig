@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="manhthiep/android.sh"/>
+  <project name="manhthiep/android_build" revision="jellybean"/>
+  <project name="manhthiep/android_device_commtiva_z71" revision="gingerbread"/>
+  <project name="manhthiep/android_device_fpt_hd"/>
+  <project name="manhthiep/android_device_hp_tenderloin" revision="ics"/>
+  <project name="manhthiep/android_device_htc_common" revision="ics"/>
+  <project name="manhthiep/android_device_htc_leo" revision="jellybean"/>
+  <project name="manhthiep/android_device_htc_qsd8k-common" revision="jellybean"/>
+  <project name="manhthiep/android_fpt_mobile_manifest"/>
+  <project name="manhthiep/android_frameworks_av" revision="jellybean"/>
+  <project name="manhthiep/android_frameworks_base" revision="jellybean"/>
+  <project name="manhthiep/android_frameworks_native" revision="jellybean"/>
+  <project name="manhthiep/android_hardware_libhardware" revision="jellybean"/>
+  <project name="manhthiep/android_hardware_libhardware_legacy" revision="jellybean"/>
+  <project name="manhthiep/android_hardware_msm7k" revision="jellybean"/>
+  <project name="manhthiep/android_hardware_qcom_audio" revision="jellybean"/>
+  <project name="manhthiep/android_hardware_qcom_camera" revision="b2g"/>
+  <project name="manhthiep/android_hardware_qcom_display" revision="jellybean"/>
+  <project name="manhthiep/android_hardware_qcom_gps" revision="jellybean"/>
+  <project name="manhthiep/android_hardware_qcom_media" revision="jellybean"/>
+  <project name="manhthiep/android_hardware_ril" revision="ics"/>
+  <project name="manhthiep/android_kernel_hp_tenderloin" revision="ics"/>
+  <project name="manhthiep/android_kernel_htcleo" revision="ics_HWA"/>
+  <project name="manhthiep/android_manifest" revision="jellybean"/>
+  <project name="manhthiep/android_vendor_hp" revision="ics"/>
+  <project name="manhthiep/android_vendor_htc_leo" revision="ics"/>
+  <project name="manhthiep/android_vendor_qcom_opensource_kernel-tests_mm-audio" revision="b2g"/>
+  <project name="manhthiep/android_vendor_qcom_opensource_omx_mm-core" revision="jellybean"/>
+  <project name="manhthiep/android_vendor_qcom_opensource_omx_mm-video" revision="jellybean"/>
+  <project name="manhthiep/android_vendor_qcom_opensource_v8" revision="b2g"/>
+  <project name="manhthiep/android_vendor_qcom_proprietary"/>
+  <project name="manhthiep/angstrom-setup-scripts"/>
+  <project name="manhthiep/B2G" revision="htcleo"/>
+  <project name="manhthiep/b2g-manifest" revision="htcleo"/>
+  <project name="manhthiep/build-webos"/>
+  <project name="manhthiep/commtiva-kernel-z71" revision="android-msm-2.6.35"/>
+  <project name="manhthiep/FreeRTOS_ARM_CM4F"/>
+  <project name="manhthiep/HelloADK"/>
+  <project name="manhthiep/htc-leo-cLK"/>
+  <project name="manhthiep/meta-smartphone" revision="shr"/>
+  <project name="manhthiep/moboot"/>
+  <project name="manhthiep/nautilus-git-scripts"/>
+  <project name="manhthiep/pygit.py"/>
+  <project name="manhthiep/qtextended"/>
+  <project name="manhthiep/raspberrypi-firmware"/>
+  <project name="manhthiep/raspberrypi-linux" revision="rpi-3.6.y"/>
+  <project name="manhthiep/raspberrypi-tools"/>
+  <project name="manhthiep/repo-manifests"/>
+  <project name="manhthiep/STM32F4_ADK"/>
+  <project name="manhthiep/wTerm"/>
+</manifest>

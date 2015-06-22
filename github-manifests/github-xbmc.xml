@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="xbmc/Addon-Frontend"/>
+  <project name="xbmc/android" revision="android-rebase-11"/>
+  <project name="xbmc/atv2" revision="atv2"/>
+  <project name="xbmc/github-trac"/>
+  <project name="xbmc/skin.touched"/>
+  <project name="xbmc/translations"/>
+  <project name="xbmc/website"/>
+  <project name="xbmc/xbmc"/>
+  <project name="xbmc/xbmc-antiquated"/>
+  <project name="xbmc/xbmc-forum"/>
+  <project name="xbmc/xbmc-live"/>
+  <project name="xbmc/xbmc-packaging"/>
+  <project name="xbmc/xbmc-rbp"/>
+  <project name="xbmc/XBMCbuntu"/>
+</manifest>

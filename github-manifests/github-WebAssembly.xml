@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="WebAssembly/design"/>
+  <project name="WebAssembly/experimental"/>
+  <project name="WebAssembly/js-astcompressor-prototype"/>
+  <project name="WebAssembly/polyfill-prototype-1"/>
+  <project name="WebAssembly/v8-native-prototype"/>
+</manifest>

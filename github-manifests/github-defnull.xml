@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <remote fetch="git://github.com/" name="github"/>
+  <default remote="github" revision="master" sync-j="4"/>
+  <project name="defnull/anmeldung"/>
+  <project name="defnull/blog.bottlepy.org"/>
+  <project name="defnull/bottle"/>
+  <project name="defnull/bottle-chat"/>
+  <project name="defnull/bottle.paws.de"/>
+  <project name="defnull/bottle_sqlalchemy"/>
+  <project name="defnull/choice"/>
+  <project name="defnull/FetchGitHubWiki"/>
+  <project name="defnull/for-the-loot"/>
+  <project name="defnull/goepy.de"/>
+  <project name="defnull/mlayer"/>
+  <project name="defnull/multipart"/>
+  <project name="defnull/Orgapp"/>
+  <project name="defnull/pixelflut"/>
+  <project name="defnull/planet-python.de"/>
+  <project name="defnull/pycopine"/>
+  <project name="defnull/rchat"/>
+  <project name="defnull/venv"/>
+  <project name="defnull/waitress"/>
+  <project name="defnull/wsgiorg"/>
+</manifest>
